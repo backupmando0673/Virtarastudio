@@ -53,10 +53,9 @@ defineProps({
         />
     </Head>
 
-    <div class="min-h-screen bg-white text-slate-900 selection:bg-orange-500 selection:text-white font-sans antialiased">
+    <div class="min-h-screen bg-white text-slate-900 selection:bg-blue-600 selection:text-white font-sans antialiased">
         <!-- Sticky Navbar -->
         <Navbar
-            :can-login="canLogin"
             :whatsapp-url="whatsappUrl"
             :site-name="settings.site_name"
         />

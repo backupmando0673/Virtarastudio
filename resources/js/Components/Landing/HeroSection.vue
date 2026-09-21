@@ -12,6 +12,8 @@ import {
     Glasses,
     ShieldCheck,
     Sparkles,
+    Palette,
+    Cpu,
 } from '@lucide/vue';
 
 const props = defineProps({
@@ -25,35 +27,47 @@ const props = defineProps({
     },
 });
 
-const heroBadge = props.settings.hero_badge || '✨ Solusi Digital Kreatif & Terjangkau';
+const heroBadge = props.settings.hero_badge || '✨ Harmoni Seni Desain & Rekayasa Teknologi';
 const heroTitle = props.settings.hero_title || 'Wujudkan Ide Digital Anda Bersama Virtarastudio';
-const heroSubtitle = props.settings.hero_subtitle || 'Jasa pembuatan website murah, aplikasi Android, game interaktif, hingga teknologi masa depan Augmented Reality (AR) & Virtual Reality (VR) dengan konsultasi gratis.';
+const heroSubtitle = props.settings.hero_subtitle || 'Jasa pembuatan website murah, aplikasi Android, game interaktif, serta teknologi masa depan Augmented Reality (AR) & Virtual Reality (VR) dengan konsultasi gratis.';
 </script>
 
 <template>
     <section class="relative overflow-hidden bg-white pt-12 pb-20 md:pt-20 md:pb-32">
-        <!-- Ambient Decorative Gradient -->
+        <!-- Dual Ambient Gradient: Warm Amber (Seni) & Electric Blue (Teknologi) -->
         <div
-            class="pointer-events-none absolute -top-40 left-1/2 -z-10 h-[550px] w-[900px] -translate-x-1/2 rounded-full bg-gradient-to-tr from-orange-200/40 via-amber-100/30 to-transparent blur-3xl"
+            class="pointer-events-none absolute -top-40 -left-20 -z-10 h-[500px] w-[500px] rounded-full bg-gradient-to-tr from-amber-200/35 via-orange-100/30 to-transparent blur-3xl"
+        />
+        <div
+            class="pointer-events-none absolute -top-40 -right-20 -z-10 h-[500px] w-[500px] rounded-full bg-gradient-to-bl from-blue-200/35 via-cyan-100/25 to-transparent blur-3xl"
         />
 
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="grid items-center gap-12 lg:grid-cols-12 lg:gap-8">
                 <!-- Left Column: Copy & CTAs -->
                 <div class="flex flex-col items-center text-center lg:col-span-7 lg:items-start lg:text-left">
-                    <!-- Pill Badge -->
+                    <!-- Dual Pillar Pill Badge -->
                     <div
-                        class="mb-6 inline-flex items-center gap-2 rounded-full border border-orange-200/80 bg-orange-50/80 px-4 py-1.5 text-xs font-semibold text-orange-700 shadow-sm transition-all hover:bg-orange-100/80"
+                        class="mb-6 inline-flex items-center gap-2.5 rounded-full border border-slate-200/90 bg-gradient-to-r from-amber-50 via-white to-blue-50 px-4 py-1.5 text-xs font-semibold text-slate-700 shadow-xs"
                     >
-                        <Sparkles class="h-3.5 w-3.5 text-orange-500" />
-                        <span>{{ heroBadge }}</span>
+                        <span class="flex items-center gap-1 text-amber-600 font-bold">
+                            <Palette class="h-3.5 w-3.5" />
+                            Seni
+                        </span>
+                        <span class="text-slate-300">&bull;</span>
+                        <span class="flex items-center gap-1 text-blue-600 font-bold">
+                            <Cpu class="h-3.5 w-3.5" />
+                            Teknologi
+                        </span>
+                        <span class="text-slate-300">|</span>
+                        <span class="text-slate-600">{{ heroBadge }}</span>
                     </div>
 
                     <!-- Main Headline -->
                     <h1 class="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl leading-[1.12]">
-                        Bangun Solusi Digital Impian Bersama
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-orange-600 to-amber-500">
-                            Virtarastudio
+                        Harmoni Karya Seni & Kecanggihan
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 via-orange-500 to-blue-600">
+                            Teknologi Digital
                         </span>
                     </h1>
 
@@ -70,8 +84,7 @@ const heroSubtitle = props.settings.hero_subtitle || 'Jasa pembuatan website mur
                             target="_blank"
                             rel="noopener noreferrer"
                             size="lg"
-                            variant="default"
-                            class="w-full sm:w-auto gap-2.5 font-bold shadow-lg shadow-orange-500/25 hover:shadow-xl hover:shadow-orange-500/30"
+                            class="w-full sm:w-auto gap-2.5 font-bold bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white shadow-lg shadow-amber-500/25 border-0 hover:-translate-y-0.5"
                         >
                             <MessageCircle class="h-5 w-5" />
                             Konsultasi Gratis via WhatsApp
@@ -82,7 +95,7 @@ const heroSubtitle = props.settings.hero_subtitle || 'Jasa pembuatan website mur
                             href="#services"
                             size="lg"
                             variant="outline"
-                            class="w-full sm:w-auto gap-2 font-semibold text-slate-700 hover:text-orange-600"
+                            class="w-full sm:w-auto gap-2 font-semibold border-blue-200 bg-blue-50/40 text-blue-700 hover:bg-blue-100/70 hover:border-blue-300"
                         >
                             Lihat 5 Layanan Kami
                             <ArrowRight class="h-4 w-4" />
@@ -92,15 +105,15 @@ const heroSubtitle = props.settings.hero_subtitle || 'Jasa pembuatan website mur
                     <!-- Value Highlights Checklist -->
                     <div class="mt-10 grid grid-cols-2 sm:grid-cols-3 gap-3.5 pt-4 text-xs sm:text-sm font-medium text-slate-600 border-t border-slate-100 w-full">
                         <div class="flex items-center gap-2">
-                            <CheckCircle2 class="h-4 w-4 text-orange-500 shrink-0" />
-                            <span>100% Konsultasi Gratis</span>
+                            <CheckCircle2 class="h-4 w-4 text-amber-500 shrink-0" />
+                            <span>100% Bebas Konsultasi</span>
                         </div>
                         <div class="flex items-center gap-2">
-                            <CheckCircle2 class="h-4 w-4 text-orange-500 shrink-0" />
-                            <span>Pengerjaan Cepat & Rapi</span>
+                            <CheckCircle2 class="h-4 w-4 text-blue-500 shrink-0" />
+                            <span>Teknologi Andal & Cepat</span>
                         </div>
                         <div class="flex items-center gap-2">
-                            <CheckCircle2 class="h-4 w-4 text-orange-500 shrink-0" />
+                            <CheckCircle2 class="h-4 w-4 text-emerald-500 shrink-0" />
                             <span>Garansi Bebas Bug</span>
                         </div>
                     </div>
@@ -109,9 +122,9 @@ const heroSubtitle = props.settings.hero_subtitle || 'Jasa pembuatan website mur
                 <!-- Right Column: Interactive Tech Card Mockup -->
                 <div class="lg:col-span-5">
                     <div class="relative mx-auto max-w-md lg:max-w-none">
-                        <!-- Glow behind card -->
+                        <!-- Dual Glow behind card -->
                         <div
-                            class="absolute -inset-1 rounded-3xl bg-gradient-to-r from-orange-400/20 to-amber-300/20 blur-xl opacity-70"
+                            class="absolute -inset-1 rounded-3xl bg-gradient-to-r from-amber-400/20 via-orange-300/15 to-blue-500/20 blur-xl opacity-75"
                         />
 
                         <!-- Main Showcase Card -->
@@ -119,86 +132,99 @@ const heroSubtitle = props.settings.hero_subtitle || 'Jasa pembuatan website mur
                             class="relative rounded-3xl border border-slate-200/90 bg-white/95 p-6 sm:p-8 shadow-2xl backdrop-blur-sm"
                         >
                             <div class="flex items-center justify-between border-b border-slate-100 pb-4">
-                                <div class="flex items-center gap-3">
-                                    <div class="h-3 w-3 rounded-full bg-red-400"></div>
-                                    <div class="h-3 w-3 rounded-full bg-amber-400"></div>
-                                    <div class="h-3 w-3 rounded-full bg-green-400"></div>
-                                    <span class="text-xs font-semibold text-slate-400">Virtara Tech Hub</span>
+                                <div class="flex items-center gap-2.5">
+                                    <span class="flex h-3 w-3 rounded-full bg-amber-400" title="Seni"></span>
+                                    <span class="flex h-3 w-3 rounded-full bg-blue-500" title="Teknologi"></span>
+                                    <span class="text-xs font-bold text-slate-500 ml-1">Virtara Studio Ecosystem</span>
                                 </div>
-                                <Badge variant="orangeSoft" class="text-[11px]">5 Lini Layanan</Badge>
+                                <span class="rounded-full bg-slate-100 px-2.5 py-0.5 text-[10px] font-bold text-slate-600 uppercase">
+                                    5 Layanan
+                                </span>
                             </div>
 
                             <!-- Showcase Grid Items -->
                             <div class="mt-6 space-y-3.5">
-                                <!-- Service 1 -->
+                                <!-- Service 1: Seni Desain Web -->
                                 <div
-                                    class="group flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50/70 p-3.5 transition-all hover:border-orange-200 hover:bg-orange-50/40"
+                                    class="group flex items-center justify-between rounded-xl border border-amber-100 bg-amber-50/40 p-3.5 transition-all hover:border-amber-300 hover:bg-amber-50/70"
                                 >
                                     <div class="flex items-center gap-3">
-                                        <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-orange-100 text-orange-600">
+                                        <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-500 text-white shadow-xs">
                                             <Globe class="h-5 w-5" />
                                         </div>
                                         <div>
-                                            <h4 class="text-sm font-bold text-slate-900">Website Murah</h4>
-                                            <p class="text-xs text-slate-500">Landing Page, Toko Online & Web App</p>
+                                            <div class="flex items-center gap-1.5">
+                                                <h4 class="text-sm font-bold text-slate-900">Website Murah</h4>
+                                                <span class="rounded bg-amber-100 px-1.5 py-0.2 text-[9px] font-bold text-amber-700">SENI</span>
+                                            </div>
+                                            <p class="text-xs text-slate-500">Landing Page & Toko Online Estetik</p>
                                         </div>
                                     </div>
-                                    <span class="text-xs font-bold text-orange-600">Mulai 499rb</span>
+                                    <span class="text-xs font-bold text-amber-600">Mulai 499rb</span>
                                 </div>
 
-                                <!-- Service 2 -->
+                                <!-- Service 2: Teknologi Mobile Android -->
                                 <div
-                                    class="group flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50/70 p-3.5 transition-all hover:border-orange-200 hover:bg-orange-50/40"
+                                    class="group flex items-center justify-between rounded-xl border border-blue-100 bg-blue-50/40 p-3.5 transition-all hover:border-blue-300 hover:bg-blue-50/70"
                                 >
                                     <div class="flex items-center gap-3">
-                                        <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-orange-100 text-orange-600">
+                                        <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600 text-white shadow-xs">
                                             <Smartphone class="h-5 w-5" />
                                         </div>
                                         <div>
-                                            <h4 class="text-sm font-bold text-slate-900">App Android</h4>
-                                            <p class="text-xs text-slate-500">Aplikasi Bisnis, Kasir & Startup</p>
+                                            <div class="flex items-center gap-1.5">
+                                                <h4 class="text-sm font-bold text-slate-900">App Android</h4>
+                                                <span class="rounded bg-blue-100 px-1.5 py-0.2 text-[9px] font-bold text-blue-700">TEKNO</span>
+                                            </div>
+                                            <p class="text-xs text-slate-500">Aplikasi Bisnis, Kasir & Backend</p>
                                         </div>
                                     </div>
-                                    <span class="text-xs font-bold text-orange-600">Mulai 1.4Jt</span>
+                                    <span class="text-xs font-bold text-blue-600">Mulai 1.4Jt</span>
                                 </div>
 
-                                <!-- Service 3 -->
+                                <!-- Service 3: Seni Game & Gameplay -->
                                 <div
-                                    class="group flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50/70 p-3.5 transition-all hover:border-orange-200 hover:bg-orange-50/40"
+                                    class="group flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50/70 p-3.5 transition-all hover:border-amber-200 hover:bg-amber-50/30"
                                 >
                                     <div class="flex items-center gap-3">
-                                        <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-orange-100 text-orange-600">
+                                        <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-tr from-amber-500 to-orange-500 text-white shadow-xs">
                                             <Gamepad2 class="h-5 w-5" />
                                         </div>
                                         <div>
-                                            <h4 class="text-sm font-bold text-slate-900">Game Android</h4>
-                                            <p class="text-xs text-slate-500">Game Edukasi & Promosi 2D/3D</p>
+                                            <div class="flex items-center gap-1.5">
+                                                <h4 class="text-sm font-bold text-slate-900">Game Android</h4>
+                                                <span class="rounded bg-amber-100 px-1.5 py-0.2 text-[9px] font-bold text-amber-700">SENI</span>
+                                            </div>
+                                            <p class="text-xs text-slate-500">Visual 2D/3D & Edukasi Seru</p>
                                         </div>
                                     </div>
-                                    <span class="text-xs font-bold text-orange-600">Mulai 1.9Jt</span>
+                                    <span class="text-xs font-bold text-amber-600">Mulai 1.9Jt</span>
                                 </div>
 
-                                <!-- Service 4 & 5 (Immersive AR & VR) -->
+                                <!-- Service 4 & 5: AR & VR Immersive Tech -->
                                 <div
-                                    class="group flex items-center justify-between rounded-xl border border-orange-200 bg-gradient-to-r from-orange-50/70 to-amber-50/40 p-3.5 transition-all shadow-sm"
+                                    class="group flex items-center justify-between rounded-xl border-2 border-blue-300 bg-gradient-to-r from-blue-50/80 via-white to-amber-50/50 p-3.5 transition-all shadow-sm"
                                 >
                                     <div class="flex items-center gap-3">
-                                        <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-orange-500 text-white">
+                                        <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600 text-white shadow-xs">
                                             <Scan class="h-5 w-5" />
                                         </div>
                                         <div>
-                                            <h4 class="text-sm font-bold text-slate-900">App AR & VR</h4>
+                                            <div class="flex items-center gap-1.5">
+                                                <h4 class="text-sm font-bold text-slate-900">App AR & VR</h4>
+                                                <span class="rounded bg-blue-100 px-1.5 py-0.2 text-[9px] font-bold text-blue-700">FUTURISTIK</span>
+                                            </div>
                                             <p class="text-xs text-slate-600">3D Product Viewer & 360° Virtual Tour</p>
                                         </div>
                                     </div>
-                                    <Badge variant="default" class="bg-orange-500 text-white text-[10px]">Populer</Badge>
+                                    <Badge class="bg-blue-600 text-white text-[10px]">Populer</Badge>
                                 </div>
                             </div>
 
                             <!-- Bottom Guarantee Note -->
                             <div class="mt-6 flex items-center justify-center gap-2 rounded-xl bg-slate-50 py-2.5 px-3 text-center text-xs font-medium text-slate-600">
-                                <ShieldCheck class="h-4 w-4 text-orange-500" />
-                                <span>Pengerjaan Resmi, Transparan & Bergaransi</span>
+                                <ShieldCheck class="h-4 w-4 text-emerald-500" />
+                                <span>Kombinasi Estetika Visual & Kode Perangkat Lunak Mutakhir</span>
                             </div>
                         </div>
                     </div>

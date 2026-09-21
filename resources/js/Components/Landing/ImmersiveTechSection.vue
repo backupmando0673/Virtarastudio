@@ -5,8 +5,8 @@ import {
     Scan,
     Glasses,
     Gamepad2,
-    Eye,
-    Layers,
+    Palette,
+    Cpu,
     Sparkles,
     MessageCircle,
     ArrowRight,
@@ -22,130 +22,156 @@ const props = defineProps({
 
 <template>
     <section id="immersive" class="relative overflow-hidden bg-white py-20 md:py-28">
-        <!-- Subtle background shapes -->
+        <!-- Dual background blurs -->
         <div
-            class="pointer-events-none absolute top-1/2 right-0 -z-10 h-[500px] w-[500px] -translate-y-1/2 rounded-full bg-orange-100/40 blur-3xl"
+            class="pointer-events-none absolute top-1/2 left-0 -z-10 h-[450px] w-[450px] -translate-y-1/2 rounded-full bg-amber-100/30 blur-3xl"
+        />
+        <div
+            class="pointer-events-none absolute top-1/2 right-0 -z-10 h-[450px] w-[450px] -translate-y-1/2 rounded-full bg-blue-100/35 blur-3xl"
         />
 
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <!-- Header -->
             <div class="flex flex-col items-center text-center">
-                <div class="inline-flex items-center gap-2 rounded-full bg-orange-100/80 px-4 py-1 text-xs font-semibold text-orange-700">
-                    <Sparkles class="h-3.5 w-3.5 text-orange-500" />
-                    <span>Inovasi Masa Depan</span>
+                <div class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-1 text-xs font-semibold text-slate-700 shadow-xs">
+                    <span class="flex items-center gap-1 text-amber-600 font-bold">
+                        <Palette class="h-3.5 w-3.5" /> Seni
+                    </span>
+                    <span class="text-slate-300">&bull;</span>
+                    <span class="flex items-center gap-1 text-blue-600 font-bold">
+                        <Cpu class="h-3.5 w-3.5" /> Teknologi
+                    </span>
+                    <span class="text-slate-300">|</span>
+                    <span class="text-slate-600">Inovasi Terdepan</span>
                 </div>
+
                 <h2 class="mt-4 max-w-3xl text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
                     Keunggulan Spesial: Game, AR & VR Development
                 </h2>
                 <p class="mt-4 max-w-2xl text-base text-slate-600 sm:text-lg leading-relaxed">
-                    Virtarastudio tidak hanya membangun website dan aplikasi biasa. Kami menghadirkan teknologi interaktif & imersif untuk meningkatkan daya tarik brand Anda ke level berikutnya.
+                    Kami menggabungkan estetika desain visual (Seni) dan algoritma perangkat lunak mutakhir (Teknologi) untuk menghasilkan produk imersif yang memikat pelanggan Anda.
                 </p>
             </div>
 
             <!-- 3 Immersive Pillars Grid -->
             <div class="mt-14 grid gap-8 md:grid-cols-3">
-                <!-- Pillar 1: Game Development -->
+                <!-- Pillar 1: Game Development (Pilar Seni & Interaksi) -->
                 <div
-                    class="group relative flex flex-col justify-between rounded-3xl border border-slate-200/90 bg-white p-8 shadow-sm transition-all duration-300 hover:border-orange-300 hover:shadow-xl hover:shadow-orange-500/10"
+                    class="group relative flex flex-col justify-between rounded-3xl border border-amber-200/90 bg-gradient-to-b from-amber-50/30 to-white p-8 shadow-sm transition-all duration-300 hover:border-amber-400 hover:shadow-xl hover:shadow-amber-500/10"
                 >
                     <div>
-                        <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-orange-500 text-white shadow-md shadow-orange-500/25">
-                            <Gamepad2 class="h-7 w-7" />
+                        <div class="flex items-center justify-between">
+                            <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-amber-500 text-white shadow-md shadow-amber-500/25">
+                                <Gamepad2 class="h-7 w-7" />
+                            </div>
+                            <span class="rounded-full bg-amber-100 px-2.5 py-0.5 text-[10px] font-bold text-amber-800 uppercase tracking-wider">
+                                Pilar Seni
+                            </span>
                         </div>
                         <h3 class="mt-6 text-xl font-bold text-slate-900">
                             Game Android 2D & 3D
                         </h3>
                         <p class="mt-3 text-sm text-slate-600 leading-relaxed">
-                            Kembangkan game seru untuk media promosi bisnis (advergame), gamifikasi event, maupun media edukasi interaktif anak dan pelajar dengan engine game modern.
+                            Kombinasi ilustrasi karakter yang indah, animasi fluid, dan efek suara berpadu dengan mekanik gameplay adiktif untuk media promosi dan edukasi interaktif.
                         </p>
                         <div class="mt-5 space-y-2 text-xs font-medium text-slate-700">
                             <div class="flex items-center gap-2">
-                                <span class="h-1.5 w-1.5 rounded-full bg-orange-500"></span>
-                                <span>Game promosi brand & event</span>
+                                <span class="h-1.5 w-1.5 rounded-full bg-amber-500"></span>
+                                <span>Game promosi brand (Advergame)</span>
                             </div>
                             <div class="flex items-center gap-2">
-                                <span class="h-1.5 w-1.5 rounded-full bg-orange-500"></span>
+                                <span class="h-1.5 w-1.5 rounded-full bg-amber-500"></span>
                                 <span>Game edukasi sekolah & kampus</span>
                             </div>
                             <div class="flex items-center gap-2">
-                                <span class="h-1.5 w-1.5 rounded-full bg-orange-500"></span>
-                                <span>Game komersial publik (Admob/IAP)</span>
+                                <span class="h-1.5 w-1.5 rounded-full bg-amber-500"></span>
+                                <span>Game komersial Play Store (AdMob/IAP)</span>
                             </div>
                         </div>
                     </div>
-                    <div class="mt-8 pt-6 border-t border-slate-100">
-                        <Badge variant="orangeSoft">Unity & Godot Engine</Badge>
+                    <div class="mt-8 pt-6 border-t border-amber-100 flex items-center justify-between">
+                        <span class="text-xs font-semibold text-amber-700">Unity & Godot Engine</span>
+                        <span class="text-xs font-bold text-slate-900">Mulai 1.9Jt</span>
                     </div>
                 </div>
 
-                <!-- Pillar 2: Augmented Reality (AR) -->
+                <!-- Pillar 2: Augmented Reality (Pilar Teknologi 3D) -->
                 <div
-                    class="group relative flex flex-col justify-between rounded-3xl border-2 border-orange-400 bg-gradient-to-b from-orange-50/40 via-white to-white p-8 shadow-lg shadow-orange-500/10 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
+                    class="group relative flex flex-col justify-between rounded-3xl border-2 border-blue-400 bg-gradient-to-b from-blue-50/40 via-white to-white p-8 shadow-lg shadow-blue-500/10 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
                 >
                     <div>
                         <div class="flex items-center justify-between">
-                            <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-orange-500 text-white shadow-md shadow-orange-500/25">
+                            <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-md shadow-blue-600/25">
                                 <Scan class="h-7 w-7" />
                             </div>
-                            <Badge variant="default" class="bg-orange-500 text-white text-xs">Paling Diminati</Badge>
+                            <span class="rounded-full bg-blue-600 px-2.5 py-0.5 text-[10px] font-bold text-white uppercase tracking-wider">
+                                Pilar Teknologi
+                            </span>
                         </div>
                         <h3 class="mt-6 text-xl font-bold text-slate-900">
                             Augmented Reality (AR)
                         </h3>
                         <p class="mt-3 text-sm text-slate-600 leading-relaxed">
-                            Hadirkan produk 3D langsung di depan mata calon pembeli lewat kamera smartphone. Sangat efektif untuk katalog furnitur, pameran produk, dan promosi sosial media.
+                            Proyeksikan model 3D produk Anda secara nyata di ruangan calon pelanggan melalui kamera smartphone. Solusi tepat untuk pameran, katalog furnitur, dan pemasaran modern.
                         </p>
                         <div class="mt-5 space-y-2 text-xs font-medium text-slate-700">
                             <div class="flex items-center gap-2">
-                                <span class="h-1.5 w-1.5 rounded-full bg-orange-500"></span>
+                                <span class="h-1.5 w-1.5 rounded-full bg-blue-600"></span>
                                 <span>Katalog 3D produk interaktif</span>
                             </div>
                             <div class="flex items-center gap-2">
-                                <span class="h-1.5 w-1.5 rounded-full bg-orange-500"></span>
-                                <span>WebAR (Tanpa download aplikasi)</span>
+                                <span class="h-1.5 w-1.5 rounded-full bg-blue-600"></span>
+                                <span>WebAR (Buka langsung tanpa download)</span>
                             </div>
                             <div class="flex items-center gap-2">
-                                <span class="h-1.5 w-1.5 rounded-full bg-orange-500"></span>
-                                <span>Buku visual 3D & edukasi sains</span>
+                                <span class="h-1.5 w-1.5 rounded-full bg-blue-600"></span>
+                                <span>Buku visual 3D & edukasi anatomi</span>
                             </div>
                         </div>
                     </div>
-                    <div class="mt-8 pt-6 border-t border-orange-100">
-                        <Badge variant="orangeSoft">WebAR & ARCore / ARKit</Badge>
+                    <div class="mt-8 pt-6 border-t border-blue-100 flex items-center justify-between">
+                        <span class="text-xs font-semibold text-blue-700">WebAR & ARCore / ARKit</span>
+                        <span class="text-xs font-bold text-slate-900">Mulai 1.8Jt</span>
                     </div>
                 </div>
 
-                <!-- Pillar 3: Virtual Reality (VR) -->
+                <!-- Pillar 3: Virtual Reality (Pilar Teknologi Imersif) -->
                 <div
-                    class="group relative flex flex-col justify-between rounded-3xl border border-slate-200/90 bg-white p-8 shadow-sm transition-all duration-300 hover:border-orange-300 hover:shadow-xl hover:shadow-orange-500/10"
+                    class="group relative flex flex-col justify-between rounded-3xl border border-indigo-200/90 bg-gradient-to-b from-indigo-50/30 to-white p-8 shadow-sm transition-all duration-300 hover:border-indigo-400 hover:shadow-xl hover:shadow-indigo-500/10"
                 >
                     <div>
-                        <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-orange-500 text-white shadow-md shadow-orange-500/25">
-                            <Glasses class="h-7 w-7" />
+                        <div class="flex items-center justify-between">
+                            <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-600 text-white shadow-md shadow-indigo-600/25">
+                                <Glasses class="h-7 w-7" />
+                            </div>
+                            <span class="rounded-full bg-indigo-100 px-2.5 py-0.5 text-[10px] font-bold text-indigo-800 uppercase tracking-wider">
+                                Pilar Teknologi
+                            </span>
                         </div>
                         <h3 class="mt-6 text-xl font-bold text-slate-900">
                             Virtual Reality (VR)
                         </h3>
                         <p class="mt-3 text-sm text-slate-600 leading-relaxed">
-                            Ciptakan simulasi dunia virtual 360° yang imersif. Solusi terbaik untuk virtual tour perumahan/apartemen, pariwisata, hingga simulasi pelatihan kerja dengan risiko nol.
+                            Ciptakan simulasi 360 derajat yang realistis. Memungkinkan klien berjalan di dalam rumah contoh, properti wisata, atau melatih karyawan dalam lingkungan kerja aman.
                         </p>
                         <div class="mt-5 space-y-2 text-xs font-medium text-slate-700">
                             <div class="flex items-center gap-2">
-                                <span class="h-1.5 w-1.5 rounded-full bg-orange-500"></span>
-                                <span>Virtual tour 360° properti & wisata</span>
+                                <span class="h-1.5 w-1.5 rounded-full bg-indigo-600"></span>
+                                <span>Virtual tour 360° properti & arsitektur</span>
                             </div>
                             <div class="flex items-center gap-2">
-                                <span class="h-1.5 w-1.5 rounded-full bg-orange-500"></span>
+                                <span class="h-1.5 w-1.5 rounded-full bg-indigo-600"></span>
                                 <span>Simulasi pelatihan K3 / safety training</span>
                             </div>
                             <div class="flex items-center gap-2">
-                                <span class="h-1.5 w-1.5 rounded-full bg-orange-500"></span>
-                                <span>Showroom mobil & pameran virtual</span>
+                                <span class="h-1.5 w-1.5 rounded-full bg-indigo-600"></span>
+                                <span>Showroom produk & museum virtual</span>
                             </div>
                         </div>
                     </div>
-                    <div class="mt-8 pt-6 border-t border-slate-100">
-                        <Badge variant="orangeSoft">Meta Quest & 360 Panoramic</Badge>
+                    <div class="mt-8 pt-6 border-t border-indigo-100 flex items-center justify-between">
+                        <span class="text-xs font-semibold text-indigo-700">Meta Quest & 360 HD</span>
+                        <span class="text-xs font-bold text-slate-900">Mulai 2.4Jt</span>
                     </div>
                 </div>
             </div>
@@ -159,10 +185,10 @@ const props = defineProps({
                     rel="noopener noreferrer"
                     variant="outline"
                     size="lg"
-                    class="gap-2 font-bold text-slate-800 hover:text-orange-600 hover:border-orange-300"
+                    class="gap-2 font-bold border-blue-200 bg-white text-blue-700 hover:bg-blue-50 hover:border-blue-300"
                 >
-                    <MessageCircle class="h-5 w-5 text-orange-500" />
-                    Diskusi Konsep Game / AR / VR via WhatsApp
+                    <MessageCircle class="h-5 w-5 text-emerald-500" />
+                    Konsultasi Gratis Konsep Game / AR / VR via WhatsApp
                     <ArrowRight class="h-4 w-4" />
                 </Button>
             </div>

@@ -2,13 +2,9 @@
 import { ref } from 'vue';
 import { Link } from '@inertiajs/vue3';
 import { Button } from '@/Components/ui/button';
-import { Menu, X, MessageCircle, Sparkles } from '@lucide/vue';
+import { Menu, X, MessageCircle, Sparkles, Cpu, Palette } from '@lucide/vue';
 
 const props = defineProps({
-    canLogin: {
-        type: Boolean,
-        default: true,
-    },
     whatsappUrl: {
         type: String,
         default: '#',
@@ -23,7 +19,7 @@ const mobileMenuOpen = ref(false);
 
 const navLinks = [
     { name: 'Layanan', href: '#services' },
-    { name: 'AR/VR Tech', href: '#immersive' },
+    { name: 'AR/VR & Game', href: '#immersive' },
     { name: 'Keunggulan', href: '#why-us' },
     { name: 'Portofolio', href: '#portfolio' },
     { name: 'FAQ', href: '#faq' },
@@ -32,23 +28,26 @@ const navLinks = [
 
 <template>
     <header
-        class="sticky top-0 z-40 w-full border-b border-slate-200/80 bg-white/90 backdrop-blur-md transition-all"
+        class="sticky top-0 z-40 w-full border-b border-slate-200/80 bg-white/95 backdrop-blur-md transition-all shadow-xs"
     >
         <div class="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-            <!-- Brand Logo -->
+            <!-- Brand Logo: Blue (Teknologi) + Kuning/Amber (Seni) -->
             <a href="#" class="group flex items-center gap-2.5">
                 <div
-                    class="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-500 text-white shadow-md shadow-orange-500/25 transition-transform duration-200 group-hover:scale-105"
+                    class="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 via-blue-500 to-amber-400 text-white shadow-md shadow-blue-500/20 transition-transform duration-200 group-hover:scale-105"
                 >
                     <Sparkles class="h-5 w-5" />
                 </div>
                 <div class="flex flex-col">
-                    <span class="text-xl font-extrabold tracking-tight text-slate-900">
-                        Virtara<span class="text-orange-500">studio</span>
-                    </span>
-                    <span class="text-[10px] font-medium tracking-widest text-slate-500 uppercase">
-                        Digital & Immersive Studio
-                    </span>
+                    <div class="flex items-center text-xl font-extrabold tracking-tight">
+                        <span class="text-slate-900">Virtara</span>
+                        <span class="text-amber-500">studio</span>
+                    </div>
+                    <div class="flex items-center gap-1.5 text-[10px] font-semibold tracking-wider uppercase text-slate-400">
+                        <span class="text-amber-600 font-bold">Seni</span>
+                        <span>&bull;</span>
+                        <span class="text-blue-600 font-bold">Teknologi</span>
+                    </div>
                 </div>
             </a>
 
@@ -58,27 +57,21 @@ const navLinks = [
                     v-for="link in navLinks"
                     :key="link.name"
                     :href="link.href"
-                    class="text-sm font-medium text-slate-600 transition-colors duration-150 hover:text-orange-600"
+                    class="text-sm font-medium text-slate-600 transition-colors duration-150 hover:text-blue-600"
                 >
                     {{ link.name }}
                 </a>
             </nav>
 
-            <!-- Actions Desktop -->
-            <div class="hidden items-center gap-3 md:flex">
+            <!-- Actions Desktop: WhatsApp CTA & Only show dashboard if logged in -->
+            <div class="hidden items-center gap-3.5 md:flex">
                 <Link
                     v-if="$page.props.auth.user"
                     :href="route('dashboard')"
-                    class="text-sm font-medium text-slate-700 hover:text-orange-600"
+                    class="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2 text-xs font-semibold text-slate-700 hover:border-blue-300 hover:text-blue-600 transition"
                 >
-                    Dashboard Admin
-                </Link>
-                <Link
-                    v-else-if="canLogin"
-                    :href="route('login')"
-                    class="text-sm font-medium text-slate-600 hover:text-orange-600"
-                >
-                    Admin Login
+                    <Cpu class="h-3.5 w-3.5 text-blue-500" />
+                    <span>Dashboard Admin</span>
                 </Link>
 
                 <Button
@@ -86,8 +79,7 @@ const navLinks = [
                     :href="whatsappUrl"
                     target="_blank"
                     rel="noopener noreferrer"
-                    variant="default"
-                    class="gap-2 font-semibold shadow-md shadow-orange-500/20"
+                    class="gap-2 font-bold bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white shadow-md shadow-amber-500/25 border-0 hover:-translate-y-0.5"
                 >
                     <MessageCircle class="h-4 w-4" />
                     Konsultasi Gratis
@@ -102,7 +94,7 @@ const navLinks = [
                     @click="mobileMenuOpen = !mobileMenuOpen"
                 >
                     <Menu v-if="!mobileMenuOpen" class="h-6 w-6" />
-                    <X v-else class="h-6 w-6 text-orange-600" />
+                    <X v-else class="h-6 w-6 text-amber-500" />
                 </button>
             </div>
         </div>
@@ -117,7 +109,7 @@ const navLinks = [
                     v-for="link in navLinks"
                     :key="link.name"
                     :href="link.href"
-                    class="rounded-lg px-3 py-2 text-base font-medium text-slate-700 hover:bg-orange-50 hover:text-orange-600"
+                    class="rounded-lg px-3 py-2 text-base font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600"
                     @click="mobileMenuOpen = false"
                 >
                     {{ link.name }}
@@ -128,27 +120,19 @@ const navLinks = [
                         :href="whatsappUrl"
                         target="_blank"
                         rel="noopener noreferrer"
-                        variant="default"
-                        class="w-full gap-2 font-semibold shadow-md shadow-orange-500/20"
+                        class="w-full gap-2 font-bold bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white shadow-md shadow-amber-500/25 border-0"
                         @click="mobileMenuOpen = false"
                     >
                         <MessageCircle class="h-4 w-4" />
                         Konsultasi Gratis via WhatsApp
                     </Button>
-                    <div class="mt-3 text-center">
+
+                    <div v-if="$page.props.auth.user" class="mt-3 text-center">
                         <Link
-                            v-if="$page.props.auth.user"
                             :href="route('dashboard')"
-                            class="text-sm font-medium text-slate-700 hover:text-orange-600"
+                            class="text-xs font-semibold text-blue-600 hover:underline"
                         >
-                            Masuk ke Dashboard Admin
-                        </Link>
-                        <Link
-                            v-else-if="canLogin"
-                            :href="route('login')"
-                            class="text-xs font-medium text-slate-500 hover:text-orange-600"
-                        >
-                            Admin Login Area
+                            Masuk ke Dashboard Admin &rarr;
                         </Link>
                     </div>
                 </div>

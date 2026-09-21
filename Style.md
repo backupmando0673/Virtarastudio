@@ -1,107 +1,99 @@
 # Design System & Style Guidelines (Style.md)
 **Project Name**: Virtarastudio  
-**Core Theme**: Crisp Modern White with Vibrant Energetic Orange Accents  
+**Core Theme**: *Art Meets Technology* — Clean White Canvas with Kuning (Seni) & Biru (Teknologi) Accents  
 **UI Library**: shadcn-vue + Tailwind CSS + Lucide Icons  
 
 ---
 
-## 1. Design Philosophy
+## 1. Filosofi Desain: "Seni & Teknologi"
 
-Website Virtarastudio mengusung estetika **modern, clean, ramah, dan futuristik**. Kombinasi latar belakang putih bersih (*crisp white*) dengan aksen warna oranye (*vibrant orange*) memberikan kesan inovatif, hangat, dan mendorong aksi pengguna (konversi tinggi). Elemen 3D, AR, dan VR ditampilkan dengan card glassmorphic halus, gradien lembut, dan micro-interaction yang responsif.
+Virtarastudio menggabungkan dua pilar utama dalam setiap solusinya:
+- **Kuning / Warm Amber / Gold (SENI)**: Melambangkan kreativitas visual, keindahan desain UI/UX, kehangatan layanan konsultasi, estetika aset game 2D/3D, dan ekspresi artistik.
+- **Biru Teknologi / Electric Cyan (TEKNOLOGI)**: Melambangkan ketepatan rekayasa perangkat lunak (*software engineering*), arsitektur backend andal, stabilitas aplikasi Android, serta inovasi imersif mutakhir (AR & VR).
+- **Putih Bersih (CRISP WHITE CANVAS)**: Latar belakang putih bersih yang memberikan kesan lapang, elegan, modern, dan memudahkan keterbacaan setiap elemen produk.
+
+Perpaduan ini menciptakan identitas visual yang seimbang: tidak kaku seperti software house teknis biasa, namun juga bukan sekadar agensi desain visual—melainkan **studio perpaduan seni dan teknologi terdepan**.
 
 ---
 
-## 2. Color Palette & Tokens
+## 2. Palet Warna & Token (Color Tokens)
 
-### 2.1 Brand Colors (Orange Accent)
-| Token | HEX Code | Tailwind Class | Keterangan & Penggunaan |
+### 2.1 Pilar Seni: Kuning / Amber / Oranye Hangat
+| Token | HEX Code | Tailwind Class | Filosofi & Penggunaan |
 | :--- | :--- | :--- | :--- |
-| **Orange-50** | `#FFF7ED` | `bg-orange-50`, `text-orange-50` | Background badge halus, soft container highlight |
-| **Orange-100** | `#FFEDD5` | `bg-orange-100`, `border-orange-100` | Hover badge, border halus |
-| **Orange-200** | `#FED7AA` | `border-orange-200` | Border card highlight & form focus ring |
-| **Orange-400** | `#FB923C` | `text-orange-400` | Gradient highlight, secondary glow |
-| **Orange-500 (Primary)** | `#F97316` | `bg-orange-500`, `text-orange-500` | **Warna utama tombol CTA**, active link, icon badge |
-| **Orange-600 (Hover)** | `#EA580C` | `hover:bg-orange-600` | State hover tombol utama |
-| **Orange-700 (Active)** | `#C2410C` | `active:bg-orange-700` | State klik / pressed tombol |
+| **Amber-50** | `#FFFBEB` | `bg-amber-50` | Soft highlight kontainer seni, badge kreativitas |
+| **Amber-100** | `#FEF3C7` | `bg-amber-100`, `border-amber-200` | Tag aset desain & game art |
+| **Amber-400** | `#FBBF24` | `text-amber-400` | Bintang rating testimoni, glow aksen |
+| **Amber-500 / Orange-500** | `#F59E0B` / `#F97316` | `bg-amber-500`, `text-amber-600` | **Warna Pilar Seni**: Representasi estetika, UI/UX, CTA |
+| **Amber-600 / Orange-600** | `#D97706` / `#EA580C` | `hover:bg-amber-600` | State hover elemen hangat |
 
-### 2.2 Neutral & Background Colors
+### 2.2 Pilar Teknologi: Biru Elektrik & Indigo
+| Token | HEX Code | Tailwind Class | Filosofi & Penggunaan |
+| :--- | :--- | :--- | :--- |
+| **Blue-50** | `#EFF6FF` | `bg-blue-50` | Soft highlight fitur teknis, badge engine & coding |
+| **Blue-100** | `#DBEAFE` | `bg-blue-100`, `border-blue-200` | Border card teknologi, tag AR/VR/Mobile |
+| **Blue-500** | `#3B82F6` | `text-blue-500`, `border-blue-400` | Aksen futuristik, icon box teknologi |
+| **Blue-600 (Tech Primary)**| `#2563EB` | `bg-blue-600`, `text-blue-600` | **Warna Pilar Teknologi**: Representasi kestabilan sistem, link teknis |
+| **Blue-700** | `#1D4ED8` | `hover:bg-blue-700` | State hover tombol teknologi |
+| **Cyan-500** | `#06B6D4` | `text-cyan-500` | Gradien khusus fitur AR & VR |
+
+### 2.3 Netral & Kanvas Putih
 | Token | HEX Code | Tailwind Class | Penggunaan |
 | :--- | :--- | :--- | :--- |
-| **White (Pure)** | `#FFFFFF` | `bg-white` | Background utama halaman & latar belakang kartu |
-| **Surface Off-White** | `#F8FAFC` | `bg-slate-50` | Background section sekunder (alternating section) |
-| **Border Subtle** | `#E2E8F0` | `border-slate-200` | Garis batas navbar, card, input, separator |
-| **Text Primary** | `#0F172A` | `text-slate-900` | Heading utama, judul jasa, navigasi aktif |
-| **Text Secondary** | `#475569` | `text-slate-600` | Paragraf deskripsi, body text reguler |
-| **Text Muted** | `#94A3B8` | `text-slate-400` | Placeholder input, caption, footer note |
+| **Pure White** | `#FFFFFF` | `bg-white` | Background utama, latar kartu konten |
+| **Surface Off-White** | `#F8FAFC` | `bg-slate-50` | Alternating section background |
+| **Border Subtle** | `#E2E8F0` | `border-slate-200` | Garis batas navbar, card, pemisah section |
+| **Text Primary** | `#0F172A` | `text-slate-900` | Heading tebal, judul jasa, kontras tinggi |
+| **Text Secondary** | `#475569` | `text-slate-600` | Deskripsi teks, paragraf penjelas |
+| **Text Muted** | `#94A3B8` | `text-slate-400` | Caption, info hak cipta |
 
-### 2.3 Success / WhatsApp Accent
+### 2.4 Aksentuasi Khusus: WhatsApp
 | Token | HEX Code | Tailwind Class | Penggunaan |
 | :--- | :--- | :--- | :--- |
-| **WhatsApp Green** | `#25D366` | `bg-[#25D366]` | Floating WhatsApp Button & ikon WhatsApp resmi |
-| **WhatsApp Dark** | `#20BA59` | `hover:bg-[#20ba59]` | State hover tombol WhatsApp |
+| **WhatsApp Green** | `#25D366` | `bg-[#25D366]` | Floating WhatsApp Button & tombol konsultasi langsung |
 
 ---
 
-## 3. Typography Hierarchy
+## 3. Kombinasi Visual & Gradien Dual-Tone
 
-Menggunakan font modern sans-serif: **Plus Jakarta Sans** atau **Figtree**.
+1. **Logo Virtarastudio**:
+   - `Virtara` dalam warna **Biru Teknologi** (`text-blue-600` atau `text-slate-900` dengan titik biru).
+   - `studio` dalam warna **Kuning/Oranye Seni** (`text-amber-500` / `text-orange-500`).
+   - Ikon logo mengombinasikan oranye/amber hangat dan biru teknologi.
 
-- **Display / Hero Heading**: `text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.15]`
-- **Section Heading (H2)**: `text-3xl sm:text-4xl font-bold tracking-tight text-slate-900`
-- **Card Heading (H3)**: `text-xl font-semibold text-slate-900`
-- **Subheadline**: `text-lg sm:text-xl text-slate-600 font-normal leading-relaxed`
-- **Body Regular**: `text-base text-slate-600 leading-relaxed`
-- **Small / Caption**: `text-sm text-slate-500`
-- **Badge / Micro-copy**: `text-xs font-semibold tracking-wide uppercase`
+2. **Headline Hero Dual-Gradient**:
+   - Teks gradien memadukan kedua pilar: `bg-gradient-to-r from-amber-500 via-orange-500 to-blue-600 bg-clip-text text-transparent`.
 
----
-
-## 4. Component Design Patterns
-
-### 4.1 Buttons (shadcn-vue style)
-1. **Primary Button (CTA)**:
-   - Class: `inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-medium text-sm transition-all duration-200 shadow-md shadow-orange-500/20 hover:shadow-lg hover:shadow-orange-500/30 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]`
-2. **Secondary / Outline Button**:
-   - Class: `inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl border border-slate-200 bg-white hover:bg-orange-50 hover:border-orange-200 text-slate-800 hover:text-orange-600 font-medium text-sm transition-all duration-200`
-3. **Ghost Button**:
-   - Class: `inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg text-slate-600 hover:text-orange-600 hover:bg-orange-50/60 transition-colors duration-150`
-4. **WhatsApp Direct Button**:
-   - Class: `inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white font-semibold text-sm shadow-md shadow-green-500/20 transition-all duration-200 hover:scale-105`
-
-### 4.2 Cards & Surface
-- **Standard Service Card**:
-  - Class: `group relative bg-white rounded-2xl border border-slate-200/80 p-6 md:p-8 transition-all duration-300 hover:border-orange-300 hover:shadow-xl hover:shadow-orange-500/5 hover:-translate-y-1`
-- **Card Icon Box**:
-  - Class: `w-12 h-12 rounded-xl bg-orange-100/70 text-orange-600 flex items-center justify-center group-hover:bg-orange-500 group-hover:text-white transition-all duration-300`
-- **Featured / Highlighted Card**:
-  - Class: `relative bg-gradient-to-b from-orange-50/50 to-white rounded-2xl border-2 border-orange-400 p-6 md:p-8 shadow-lg shadow-orange-500/10`
-
-### 4.3 Form Inputs (Admin Panel & Contact Form)
-- Class: `flex h-11 w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 transition duration-150`
-
-### 4.4 Badges & Pills
-- Class: `inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-orange-50 text-orange-700 border border-orange-200/60`
-
-### 4.5 Floating Action Button (FAB WhatsApp)
-- Class: `fixed bottom-6 right-6 z-50 flex items-center gap-2 px-4 py-3 bg-[#25D366] hover:bg-[#20ba59] text-white font-medium text-sm rounded-full shadow-lg shadow-green-500/30 hover:scale-105 transition-all duration-200 group`
-- Tambahkan pulse ring effect halus (`animate-ping opacity-75`) untuk menarik atensi tanpa mengganggu pandangan.
+3. **Kategori Layanan Dual-Pillar**:
+   - Layanan Berorientasi **Seni & Kreatif** (Desain Web, Game Art): Aksen Kuning/Amber (`bg-amber-50 text-amber-700 border-amber-200`).
+   - Layanan Berorientasi **Teknologi & Engine** (Aplikasi Android, AR, VR): Aksen Biru Teknologi (`bg-blue-50 text-blue-700 border-blue-200`).
 
 ---
 
-## 5. Spacing & Container Layout
+## 4. Tipografi & Hirarki
 
-- **Max Width Container**: `max-w-7xl mx-auto px-4 sm:px-6 lg:px-8`
-- **Section Padding**: `py-16 md:py-24`
-- **Grid Gaps**: `gap-6 md:gap-8`
-- **Border Radius**:
-  - Small elements (badges, buttons, inputs): `rounded-xl` (`12px`)
-  - Medium elements (cards, modals, dropdowns): `rounded-2xl` (`16px`)
-  - Full rounded (pills, avatar, FAB): `rounded-full`
+- **Font Keluarga**: **Figtree** / **Plus Jakarta Sans** (bersih, geometris, modern).
+- **Hero Display**: `text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.12]`.
+- **Section Heading**: `text-3xl sm:text-4xl font-bold tracking-tight text-slate-900`.
+- **Subheadline**: `text-lg sm:text-xl text-slate-600 leading-relaxed`.
+- **Card Title**: `text-lg sm:text-xl font-bold text-slate-900`.
 
 ---
 
-## 6. Icons & Imagery
+## 5. Pola Komponen (shadcn-vue style)
 
-- **Icon Set**: `lucide-vue-next` (Lucide Icons).
-- **Style**: Stroke width 1.75px atau 2px, warna selaras (`text-orange-500` untuk aksen atau `text-slate-700` untuk netral).
-- **Showcase Visuals**: Gambar mockup perangkat (laptop, smartphone Android, VR Headset, AR 3D interactive preview) berlatar belakang transparan atau card gradient lembut.
+### 5.1 Tombol (Button)
+- **Primary CTA Button (Hangat / Seni)**:
+  `bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold shadow-md shadow-orange-500/20 rounded-xl px-6 py-3 transition-all duration-200 hover:-translate-y-0.5`
+- **Secondary / Tech Button (Biru Teknologi)**:
+  `border border-blue-200 bg-blue-50/50 hover:bg-blue-100/70 text-blue-700 font-semibold rounded-xl px-6 py-3 transition-all duration-200`
+- **WhatsApp Direct**:
+  `bg-[#25D366] hover:bg-[#20ba59] text-white font-bold rounded-xl px-5 py-2.5 shadow-md shadow-green-500/20`
+
+### 5.2 Kartu (Cards)
+- Border halus `border-slate-200/90`, latar putih `bg-white`, sudut `rounded-2xl`, dengan efek hover bayangan lembut bergaya tech-modern.
+
+### 5.3 Kebijakan Akses Admin
+- **Sembunyikan seluruh tautan / tombol Admin Login dari publik**.
+- Tamu (*guests*) tidak melihat opsi login di navbar maupun footer.
+- Administrator langsung mengakses URL rahasia `/login` secara manual di browser.
