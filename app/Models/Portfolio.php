@@ -1,0 +1,50 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+class Portfolio extends Model
+{
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var list<string>
+     */
+    protected $fillable = [
+        'service_id',
+        'category',
+        'title',
+        'slug',
+        'client_name',
+        'description',
+        'image_url',
+        'demo_url',
+        'technologies',
+        'is_featured',
+        'sort_order',
+    ];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'technologies' => 'array',
+            'is_featured' => 'boolean',
+            'sort_order' => 'integer',
+        ];
+    }
+
+    /**
+     * Get the service that owns the portfolio item.
+     */
+    public function service(): BelongsTo
+    {
+        return $this->belongsTo(Service::class);
+    }
+}
