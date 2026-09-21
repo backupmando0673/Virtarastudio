@@ -24,7 +24,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::get('/settings', [AdminSettingController::class, 'index'])->name('settings.index');
     Route::put('/settings', [AdminSettingController::class, 'update'])->name('settings.update');
 
-    Route::resource('services', AdminServiceController::class)->only(['index', 'edit', 'update']);
+    Route::resource('services', AdminServiceController::class);
     Route::resource('portfolios', AdminPortfolioController::class);
     Route::resource('faqs', AdminFaqController::class)->except(['create', 'show', 'edit']);
 });

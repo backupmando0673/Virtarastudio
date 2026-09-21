@@ -28,7 +28,8 @@ const props = defineProps({
 });
 
 const heroBadge = props.settings.hero_badge || '✨ Harmoni Seni Desain & Rekayasa Teknologi';
-const heroTitle = props.settings.hero_title || 'Wujudkan Ide Digital Anda Bersama Virtarastudio';
+const heroTitle = props.settings.hero_title || 'Harmoni Karya Seni & Kecanggihan';
+const heroTitleHighlight = props.settings.hero_title_highlight !== undefined ? props.settings.hero_title_highlight : 'Teknologi Digital';
 const heroSubtitle = props.settings.hero_subtitle || 'Jasa pembuatan website murah, aplikasi Android, game interaktif, serta teknologi masa depan Augmented Reality (AR) & Virtual Reality (VR) dengan konsultasi gratis.';
 </script>
 
@@ -55,10 +56,12 @@ const heroSubtitle = props.settings.hero_subtitle || 'Jasa pembuatan website mur
                         <span class="text-slate-600">{{ heroBadge }}</span>
                     </div>
 
-                    <!-- Main Headline (Solid Colors) -->
+                    <!-- Main Headline (Dynamic Solid Colors) -->
                     <h1 class="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl leading-[1.12]">
-                        Harmoni Karya Seni & Kecanggihan
-                        <span class="text-blue-600">Teknologi Digital</span>
+                        {{ heroTitle }}
+                        <span v-if="heroTitleHighlight" class="text-blue-600 block sm:inline ml-0 sm:ml-2">
+                            {{ heroTitleHighlight }}
+                        </span>
                     </h1>
 
                     <!-- Subtitle -->

@@ -41,6 +41,7 @@ class AdminCmsTest extends TestCase
             'address' => 'Jakarta, Indonesia',
             'hero_badge' => '✨ Studio Digital',
             'hero_title' => 'Judul Hero Baru',
+            'hero_title_highlight' => 'Highlight Biru Baru',
             'hero_subtitle' => 'Subjudul hero baru untuk landing page.',
             'instagram_url' => 'https://instagram.com/virtara',
             'tiktok_url' => 'https://tiktok.com/@virtara',
@@ -49,7 +50,54 @@ class AdminCmsTest extends TestCase
 
         $response->assertRedirect();
         $this->assertEquals('Virtarastudio Baru', SiteSetting::get('site_name'));
+        $this->assertEquals('Highlight Biru Baru', SiteSetting::get('hero_title_highlight'));
         $this->assertEquals('628999888777', SiteSetting::get('whatsapp_number'));
+    }
+
+    public function test_admin_can_create_service(): void
+    {
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->post('/admin/services', [
+            'name' => 'Pembuatan AI Chatbot',
+            'tagline' => 'Cerdas & Otomatis',
+            'description' => 'Layanan pembuatan chatbot pintar dengan AI terkini.',
+            'icon_name' => 'Globe',
+            'features' => ['Integrasi WhatsApp', 'Terkoneksi API OpenAI'],
+            'starting_price' => 'Rp 1.500.000',
+            'whatsapp_template' => 'Halo, saya ingin konsultasi chatbot AI.',
+            'is_active' => 1,
+            'sort_order' => 6,
+        ]);
+
+        $response->assertRedirect('/admin/services');
+        $this->assertDatabaseHas('services', [
+            'name' => 'Pembuatan AI Chatbot',
+            'slug' => 'pembuatan-ai-chatbot',
+            'starting_price' => 'Rp 1.500.000',
+        ]);
+    }
+
+    public function test_admin_can_delete_service(): void
+    {
+        $user = User::factory()->create();
+
+        $service = Service::create([
+            'name' => 'Layanan Sementara',
+            'slug' => 'layanan-sementara',
+            'description' => 'Layanan yang akan dihapus',
+            'icon_name' => 'Globe',
+            'starting_price' => 'Rp 100.000',
+            'sort_order' => 99,
+            'is_active' => true,
+        ]);
+
+        $response = $this->actingAs($user)->delete("/admin/services/{$service->id}");
+
+        $response->assertRedirect('/admin/services');
+        $this->assertDatabaseMissing('services', [
+            'id' => $service->id,
+        ]);
     }
 
     public function test_admin_can_update_service(): void

@@ -36,6 +36,7 @@ class AdminSettingController extends Controller
             'address' => ['nullable', 'string', 'max:255'],
             'hero_badge' => ['nullable', 'string', 'max:255'],
             'hero_title' => ['required', 'string', 'max:500'],
+            'hero_title_highlight' => ['nullable', 'string', 'max:500'],
             'hero_subtitle' => ['required', 'string'],
             'instagram_url' => ['nullable', 'url', 'max:255'],
             'tiktok_url' => ['nullable', 'url', 'max:255'],

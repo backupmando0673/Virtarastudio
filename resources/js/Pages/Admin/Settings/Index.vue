@@ -21,7 +21,8 @@ const form = useForm({
     email: props.settings.email || '',
     address: props.settings.address || 'Indonesia',
     hero_badge: props.settings.hero_badge || '',
-    hero_title: props.settings.hero_title || '',
+    hero_title: props.settings.hero_title || 'Harmoni Karya Seni & Kecanggihan',
+    hero_title_highlight: props.settings.hero_title_highlight || 'Teknologi Digital',
     hero_subtitle: props.settings.hero_subtitle || '',
     instagram_url: props.settings.instagram_url || '',
     tiktok_url: props.settings.tiktok_url || '',
@@ -142,17 +143,44 @@ const submit = () => {
 
                             <div>
                                 <label class="block text-xs font-semibold text-slate-700 uppercase mb-1.5">
-                                    Judul Utama (Headline) *
+                                    Judul Utama Besar (Teks Biasa) *
                                 </label>
                                 <Input
                                     v-model="form.hero_title"
                                     type="text"
-                                    placeholder="Wujudkan Ide Digital Anda Bersama Virtarastudio"
+                                    placeholder="Harmoni Karya Seni & Kecanggihan"
                                     required
                                 />
                                 <span v-if="form.errors.hero_title" class="text-xs text-red-500 mt-1 block">
                                     {{ form.errors.hero_title }}
                                 </span>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 uppercase mb-1.5">
+                                    Judul Utama Besar (Teks Sorotan Biru Teknologi)
+                                </label>
+                                <Input
+                                    v-model="form.hero_title_highlight"
+                                    type="text"
+                                    placeholder="Teknologi Digital"
+                                />
+                                <span class="text-[11px] text-slate-400 mt-1 block">
+                                    Teks ini akan tampil berdampingan dengan judul utama dan diberi warna Biru Teknologi solid.
+                                </span>
+                            </div>
+
+                            <!-- Live Preview Box -->
+                            <div class="rounded-xl border border-slate-200 bg-slate-50 p-4">
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
+                                    Preview Teks Besar di Beranda:
+                                </span>
+                                <div class="text-lg sm:text-xl font-extrabold text-slate-900 leading-snug">
+                                    {{ form.hero_title }}
+                                    <span v-if="form.hero_title_highlight" class="text-blue-600 ml-1.5">
+                                        {{ form.hero_title_highlight }}
+                                    </span>
+                                </div>
                             </div>
 
                             <div>
