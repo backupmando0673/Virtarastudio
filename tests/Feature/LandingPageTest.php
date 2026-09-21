@@ -16,6 +16,8 @@ class LandingPageTest extends TestCase
     {
         SiteSetting::set('site_name', 'Virtarastudio');
         SiteSetting::set('whatsapp_number', '6281234567890');
+        SiteSetting::set('hero_title', 'Harmoni Karya Seni & Kecanggihan');
+        SiteSetting::set('hero_title_highlight', 'Teknologi Digital');
 
         Service::create([
             'name' => 'Pembuatan Website Murah',
@@ -37,6 +39,8 @@ class LandingPageTest extends TestCase
             ->component('Welcome')
             ->has('services', 1)
             ->where('settings.site_name', 'Virtarastudio')
+            ->where('settings.hero_title', 'Harmoni Karya Seni & Kecanggihan')
+            ->where('settings.hero_title_highlight', 'Teknologi Digital')
             ->has('whatsappUrl')
         );
     }
