@@ -33,42 +33,32 @@ const heroSubtitle = props.settings.hero_subtitle || 'Jasa pembuatan website mur
 </script>
 
 <template>
-    <section class="relative overflow-hidden bg-white pt-12 pb-20 md:pt-20 md:pb-32">
-        <!-- Dual Ambient Gradient: Warm Amber (Seni) & Electric Blue (Teknologi) -->
-        <div
-            class="pointer-events-none absolute -top-40 -left-20 -z-10 h-[500px] w-[500px] rounded-full bg-gradient-to-tr from-amber-200/35 via-orange-100/30 to-transparent blur-3xl"
-        />
-        <div
-            class="pointer-events-none absolute -top-40 -right-20 -z-10 h-[500px] w-[500px] rounded-full bg-gradient-to-bl from-blue-200/35 via-cyan-100/25 to-transparent blur-3xl"
-        />
-
+    <section class="relative bg-white pt-12 pb-20 md:pt-20 md:pb-32">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="grid items-center gap-12 lg:grid-cols-12 lg:gap-8">
                 <!-- Left Column: Copy & CTAs -->
                 <div class="flex flex-col items-center text-center lg:col-span-7 lg:items-start lg:text-left">
-                    <!-- Dual Pillar Pill Badge -->
+                    <!-- Dual Pillar Pill Badge (Solid) -->
                     <div
-                        class="mb-6 inline-flex items-center gap-2.5 rounded-full border border-slate-200/90 bg-gradient-to-r from-amber-50 via-white to-blue-50 px-4 py-1.5 text-xs font-semibold text-slate-700 shadow-xs"
+                        class="mb-6 inline-flex items-center gap-2.5 rounded-full border border-slate-200 bg-slate-50 px-4 py-1.5 text-xs font-semibold text-slate-700 shadow-2xs"
                     >
                         <span class="flex items-center gap-1 text-amber-600 font-bold">
-                            <Palette class="h-3.5 w-3.5" />
+                            <Palette class="h-3.5 w-3.5 text-amber-500" />
                             Seni
                         </span>
                         <span class="text-slate-300">&bull;</span>
                         <span class="flex items-center gap-1 text-blue-600 font-bold">
-                            <Cpu class="h-3.5 w-3.5" />
+                            <Cpu class="h-3.5 w-3.5 text-blue-600" />
                             Teknologi
                         </span>
                         <span class="text-slate-300">|</span>
                         <span class="text-slate-600">{{ heroBadge }}</span>
                     </div>
 
-                    <!-- Main Headline -->
+                    <!-- Main Headline (Solid Colors) -->
                     <h1 class="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl leading-[1.12]">
                         Harmoni Karya Seni & Kecanggihan
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 via-orange-500 to-blue-600">
-                            Teknologi Digital
-                        </span>
+                        <span class="text-blue-600">Teknologi Digital</span>
                     </h1>
 
                     <!-- Subtitle -->
@@ -76,7 +66,7 @@ const heroSubtitle = props.settings.hero_subtitle || 'Jasa pembuatan website mur
                         {{ heroSubtitle }}
                     </p>
 
-                    <!-- CTAs -->
+                    <!-- CTAs (Solid Colors) -->
                     <div class="mt-8 flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
                         <Button
                             as="a"
@@ -84,7 +74,7 @@ const heroSubtitle = props.settings.hero_subtitle || 'Jasa pembuatan website mur
                             target="_blank"
                             rel="noopener noreferrer"
                             size="lg"
-                            class="w-full sm:w-auto gap-2.5 font-bold bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white shadow-lg shadow-amber-500/25 border-0 hover:-translate-y-0.5"
+                            class="w-full sm:w-auto gap-2.5 font-bold bg-amber-500 hover:bg-amber-600 text-white shadow-md shadow-amber-500/20 border-0 hover:-translate-y-0.5 transition-all"
                         >
                             <MessageCircle class="h-5 w-5" />
                             Konsultasi Gratis via WhatsApp
@@ -95,7 +85,7 @@ const heroSubtitle = props.settings.hero_subtitle || 'Jasa pembuatan website mur
                             href="#services"
                             size="lg"
                             variant="outline"
-                            class="w-full sm:w-auto gap-2 font-semibold border-blue-200 bg-blue-50/40 text-blue-700 hover:bg-blue-100/70 hover:border-blue-300"
+                            class="w-full sm:w-auto gap-2 font-semibold border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 hover:border-blue-300 transition-all"
                         >
                             Lihat 5 Layanan Kami
                             <ArrowRight class="h-4 w-4" />
@@ -109,7 +99,7 @@ const heroSubtitle = props.settings.hero_subtitle || 'Jasa pembuatan website mur
                             <span>100% Bebas Konsultasi</span>
                         </div>
                         <div class="flex items-center gap-2">
-                            <CheckCircle2 class="h-4 w-4 text-blue-500 shrink-0" />
+                            <CheckCircle2 class="h-4 w-4 text-blue-600 shrink-0" />
                             <span>Teknologi Andal & Cepat</span>
                         </div>
                         <div class="flex items-center gap-2">
@@ -119,23 +109,18 @@ const heroSubtitle = props.settings.hero_subtitle || 'Jasa pembuatan website mur
                     </div>
                 </div>
 
-                <!-- Right Column: Interactive Tech Card Mockup -->
+                <!-- Right Column: Interactive Tech Card Mockup (Solid Clean) -->
                 <div class="lg:col-span-5">
                     <div class="relative mx-auto max-w-md lg:max-w-none">
-                        <!-- Dual Glow behind card -->
-                        <div
-                            class="absolute -inset-1 rounded-3xl bg-gradient-to-r from-amber-400/20 via-orange-300/15 to-blue-500/20 blur-xl opacity-75"
-                        />
-
                         <!-- Main Showcase Card -->
                         <div
-                            class="relative rounded-3xl border border-slate-200/90 bg-white/95 p-6 sm:p-8 shadow-2xl backdrop-blur-sm"
+                            class="relative rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 shadow-xl"
                         >
                             <div class="flex items-center justify-between border-b border-slate-100 pb-4">
                                 <div class="flex items-center gap-2.5">
                                     <span class="flex h-3 w-3 rounded-full bg-amber-400" title="Seni"></span>
-                                    <span class="flex h-3 w-3 rounded-full bg-blue-500" title="Teknologi"></span>
-                                    <span class="text-xs font-bold text-slate-500 ml-1">Virtara Studio Ecosystem</span>
+                                    <span class="flex h-3 w-3 rounded-full bg-blue-600" title="Teknologi"></span>
+                                    <span class="text-xs font-bold text-slate-600 ml-1">Virtara Studio Ecosystem</span>
                                 </div>
                                 <span class="rounded-full bg-slate-100 px-2.5 py-0.5 text-[10px] font-bold text-slate-600 uppercase">
                                     5 Layanan
@@ -144,9 +129,9 @@ const heroSubtitle = props.settings.hero_subtitle || 'Jasa pembuatan website mur
 
                             <!-- Showcase Grid Items -->
                             <div class="mt-6 space-y-3.5">
-                                <!-- Service 1: Seni Desain Web -->
+                                <!-- Service 1: Seni Desain Web (Solid) -->
                                 <div
-                                    class="group flex items-center justify-between rounded-xl border border-amber-100 bg-amber-50/40 p-3.5 transition-all hover:border-amber-300 hover:bg-amber-50/70"
+                                    class="group flex items-center justify-between rounded-xl border border-amber-200 bg-amber-50/50 p-3.5 transition-all hover:border-amber-400"
                                 >
                                     <div class="flex items-center gap-3">
                                         <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-500 text-white shadow-xs">
@@ -163,9 +148,9 @@ const heroSubtitle = props.settings.hero_subtitle || 'Jasa pembuatan website mur
                                     <span class="text-xs font-bold text-amber-600">Mulai 499rb</span>
                                 </div>
 
-                                <!-- Service 2: Teknologi Mobile Android -->
+                                <!-- Service 2: Teknologi Mobile Android (Solid) -->
                                 <div
-                                    class="group flex items-center justify-between rounded-xl border border-blue-100 bg-blue-50/40 p-3.5 transition-all hover:border-blue-300 hover:bg-blue-50/70"
+                                    class="group flex items-center justify-between rounded-xl border border-blue-200 bg-blue-50/50 p-3.5 transition-all hover:border-blue-400"
                                 >
                                     <div class="flex items-center gap-3">
                                         <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600 text-white shadow-xs">
@@ -182,12 +167,12 @@ const heroSubtitle = props.settings.hero_subtitle || 'Jasa pembuatan website mur
                                     <span class="text-xs font-bold text-blue-600">Mulai 1.4Jt</span>
                                 </div>
 
-                                <!-- Service 3: Seni Game & Gameplay -->
+                                <!-- Service 3: Seni Game & Gameplay (Solid) -->
                                 <div
-                                    class="group flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50/70 p-3.5 transition-all hover:border-amber-200 hover:bg-amber-50/30"
+                                    class="group flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 p-3.5 transition-all hover:border-amber-300 hover:bg-amber-50/40"
                                 >
                                     <div class="flex items-center gap-3">
-                                        <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-tr from-amber-500 to-orange-500 text-white shadow-xs">
+                                        <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-500 text-white shadow-xs">
                                             <Gamepad2 class="h-5 w-5" />
                                         </div>
                                         <div>
@@ -201,9 +186,9 @@ const heroSubtitle = props.settings.hero_subtitle || 'Jasa pembuatan website mur
                                     <span class="text-xs font-bold text-amber-600">Mulai 1.9Jt</span>
                                 </div>
 
-                                <!-- Service 4 & 5: AR & VR Immersive Tech -->
+                                <!-- Service 4 & 5: AR & VR Immersive Tech (Solid) -->
                                 <div
-                                    class="group flex items-center justify-between rounded-xl border-2 border-blue-300 bg-gradient-to-r from-blue-50/80 via-white to-amber-50/50 p-3.5 transition-all shadow-sm"
+                                    class="group flex items-center justify-between rounded-xl border-2 border-blue-400 bg-blue-50/40 p-3.5 transition-all shadow-xs"
                                 >
                                     <div class="flex items-center gap-3">
                                         <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600 text-white shadow-xs">

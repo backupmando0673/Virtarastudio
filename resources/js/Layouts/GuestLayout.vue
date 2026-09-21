@@ -10,7 +10,7 @@ import { Sparkles } from '@lucide/vue';
         <div>
             <Link href="/" class="flex flex-col items-center gap-2 group">
                 <div
-                    class="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-tr from-blue-600 to-amber-400 text-white shadow-md shadow-blue-500/25 transition-transform duration-200 group-hover:scale-105"
+                    class="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-xs transition-transform duration-200 group-hover:scale-105"
                 >
                     <Sparkles class="h-6 w-6" />
                 </div>

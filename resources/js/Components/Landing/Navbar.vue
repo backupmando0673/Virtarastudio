@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import { Link } from '@inertiajs/vue3';
 import { Button } from '@/Components/ui/button';
-import { Menu, X, MessageCircle, Sparkles, Cpu, Palette } from '@lucide/vue';
+import { Menu, X, MessageCircle, Sparkles, Cpu } from '@lucide/vue';
 
 const props = defineProps({
     whatsappUrl: {
@@ -28,13 +28,13 @@ const navLinks = [
 
 <template>
     <header
-        class="sticky top-0 z-40 w-full border-b border-slate-200/80 bg-white/95 backdrop-blur-md transition-all shadow-xs"
+        class="sticky top-0 z-40 w-full border-b border-slate-200 bg-white shadow-xs"
     >
         <div class="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-            <!-- Brand Logo: Blue (Teknologi) + Kuning/Amber (Seni) -->
+            <!-- Brand Logo: Solid Blue & Solid Amber -->
             <a href="#" class="group flex items-center gap-2.5">
                 <div
-                    class="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 via-blue-500 to-amber-400 text-white shadow-md shadow-blue-500/20 transition-transform duration-200 group-hover:scale-105"
+                    class="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-600 text-white shadow-xs transition-transform duration-200 group-hover:scale-105"
                 >
                     <Sparkles class="h-5 w-5" />
                 </div>
@@ -43,7 +43,7 @@ const navLinks = [
                         <span class="text-slate-900">Virtara</span>
                         <span class="text-amber-500">studio</span>
                     </div>
-                    <div class="flex items-center gap-1.5 text-[10px] font-semibold tracking-wider uppercase text-slate-400">
+                    <div class="flex items-center gap-1.5 text-[10px] font-semibold tracking-wider uppercase text-slate-500">
                         <span class="text-amber-600 font-bold">Seni</span>
                         <span>&bull;</span>
                         <span class="text-blue-600 font-bold">Teknologi</span>
@@ -63,14 +63,14 @@ const navLinks = [
                 </a>
             </nav>
 
-            <!-- Actions Desktop: WhatsApp CTA & Only show dashboard if logged in -->
+            <!-- Actions Desktop: Solid Amber Button & Dashboard link if logged in -->
             <div class="hidden items-center gap-3.5 md:flex">
                 <Link
                     v-if="$page.props.auth.user"
                     :href="route('dashboard')"
                     class="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2 text-xs font-semibold text-slate-700 hover:border-blue-300 hover:text-blue-600 transition"
                 >
-                    <Cpu class="h-3.5 w-3.5 text-blue-500" />
+                    <Cpu class="h-3.5 w-3.5 text-blue-600" />
                     <span>Dashboard Admin</span>
                 </Link>
 
@@ -79,7 +79,7 @@ const navLinks = [
                     :href="whatsappUrl"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="gap-2 font-bold bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white shadow-md shadow-amber-500/25 border-0 hover:-translate-y-0.5"
+                    class="gap-2 font-bold bg-amber-500 hover:bg-amber-600 text-white shadow-sm border-0 transition-all hover:-translate-y-0.5"
                 >
                     <MessageCircle class="h-4 w-4" />
                     Konsultasi Gratis
@@ -120,7 +120,7 @@ const navLinks = [
                         :href="whatsappUrl"
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="w-full gap-2 font-bold bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white shadow-md shadow-amber-500/25 border-0"
+                        class="w-full gap-2 font-bold bg-amber-500 hover:bg-amber-600 text-white shadow-sm border-0"
                         @click="mobileMenuOpen = false"
                     >
                         <MessageCircle class="h-4 w-4" />

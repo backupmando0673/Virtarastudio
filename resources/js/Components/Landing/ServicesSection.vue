@@ -51,7 +51,7 @@ const getServiceMeta = (slug) => {
                 icon: Gamepad2,
                 pillar: 'SENI & GAMEPLAY',
                 pillarType: 'art',
-                iconBg: 'bg-gradient-to-tr from-amber-500 to-orange-500 text-white',
+                iconBg: 'bg-amber-500 text-white',
                 borderHover: 'hover:border-amber-400',
                 badgeBg: 'bg-amber-50 text-amber-700 border-amber-200',
                 btnClass: 'bg-amber-500 hover:bg-amber-600 text-white shadow-amber-500/20',

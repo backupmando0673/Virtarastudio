@@ -21,25 +21,17 @@ const props = defineProps({
 </script>
 
 <template>
-    <section id="immersive" class="relative overflow-hidden bg-white py-20 md:py-28">
-        <!-- Dual background blurs -->
-        <div
-            class="pointer-events-none absolute top-1/2 left-0 -z-10 h-[450px] w-[450px] -translate-y-1/2 rounded-full bg-amber-100/30 blur-3xl"
-        />
-        <div
-            class="pointer-events-none absolute top-1/2 right-0 -z-10 h-[450px] w-[450px] -translate-y-1/2 rounded-full bg-blue-100/35 blur-3xl"
-        />
-
+    <section id="immersive" class="relative bg-white py-20 md:py-28">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <!-- Header -->
             <div class="flex flex-col items-center text-center">
-                <div class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-1 text-xs font-semibold text-slate-700 shadow-xs">
+                <div class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-1 text-xs font-semibold text-slate-700 shadow-2xs">
                     <span class="flex items-center gap-1 text-amber-600 font-bold">
-                        <Palette class="h-3.5 w-3.5" /> Seni
+                        <Palette class="h-3.5 w-3.5 text-amber-500" /> Seni
                     </span>
                     <span class="text-slate-300">&bull;</span>
                     <span class="flex items-center gap-1 text-blue-600 font-bold">
-                        <Cpu class="h-3.5 w-3.5" /> Teknologi
+                        <Cpu class="h-3.5 w-3.5 text-blue-600" /> Teknologi
                     </span>
                     <span class="text-slate-300">|</span>
                     <span class="text-slate-600">Inovasi Terdepan</span>
@@ -53,18 +45,18 @@ const props = defineProps({
                 </p>
             </div>
 
-            <!-- 3 Immersive Pillars Grid -->
+            <!-- 3 Immersive Pillars Grid (Solid Clean Borders) -->
             <div class="mt-14 grid gap-8 md:grid-cols-3">
                 <!-- Pillar 1: Game Development (Pilar Seni & Interaksi) -->
                 <div
-                    class="group relative flex flex-col justify-between rounded-3xl border border-amber-200/90 bg-gradient-to-b from-amber-50/30 to-white p-8 shadow-sm transition-all duration-300 hover:border-amber-400 hover:shadow-xl hover:shadow-amber-500/10"
+                    class="group relative flex flex-col justify-between rounded-3xl border border-slate-200 bg-white p-8 shadow-sm transition-all duration-300 hover:border-amber-400 hover:shadow-xl hover:-translate-y-1"
                 >
                     <div>
                         <div class="flex items-center justify-between">
-                            <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-amber-500 text-white shadow-md shadow-amber-500/25">
+                            <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-amber-500 text-white shadow-xs">
                                 <Gamepad2 class="h-7 w-7" />
                             </div>
-                            <span class="rounded-full bg-amber-100 px-2.5 py-0.5 text-[10px] font-bold text-amber-800 uppercase tracking-wider">
+                            <span class="rounded-full bg-amber-50 border border-amber-200 px-2.5 py-0.5 text-[10px] font-bold text-amber-700 uppercase tracking-wider">
                                 Pilar Seni
                             </span>
                         </div>
@@ -89,7 +81,7 @@ const props = defineProps({
                             </div>
                         </div>
                     </div>
-                    <div class="mt-8 pt-6 border-t border-amber-100 flex items-center justify-between">
+                    <div class="mt-8 pt-6 border-t border-slate-100 flex items-center justify-between">
                         <span class="text-xs font-semibold text-amber-700">Unity & Godot Engine</span>
                         <span class="text-xs font-bold text-slate-900">Mulai 1.9Jt</span>
                     </div>
@@ -97,11 +89,11 @@ const props = defineProps({
 
                 <!-- Pillar 2: Augmented Reality (Pilar Teknologi 3D) -->
                 <div
-                    class="group relative flex flex-col justify-between rounded-3xl border-2 border-blue-400 bg-gradient-to-b from-blue-50/40 via-white to-white p-8 shadow-lg shadow-blue-500/10 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
+                    class="group relative flex flex-col justify-between rounded-3xl border-2 border-blue-500 bg-white p-8 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
                 >
                     <div>
                         <div class="flex items-center justify-between">
-                            <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-md shadow-blue-600/25">
+                            <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-xs">
                                 <Scan class="h-7 w-7" />
                             </div>
                             <span class="rounded-full bg-blue-600 px-2.5 py-0.5 text-[10px] font-bold text-white uppercase tracking-wider">
@@ -129,7 +121,7 @@ const props = defineProps({
                             </div>
                         </div>
                     </div>
-                    <div class="mt-8 pt-6 border-t border-blue-100 flex items-center justify-between">
+                    <div class="mt-8 pt-6 border-t border-slate-100 flex items-center justify-between">
                         <span class="text-xs font-semibold text-blue-700">WebAR & ARCore / ARKit</span>
                         <span class="text-xs font-bold text-slate-900">Mulai 1.8Jt</span>
                     </div>
@@ -137,14 +129,14 @@ const props = defineProps({
 
                 <!-- Pillar 3: Virtual Reality (Pilar Teknologi Imersif) -->
                 <div
-                    class="group relative flex flex-col justify-between rounded-3xl border border-indigo-200/90 bg-gradient-to-b from-indigo-50/30 to-white p-8 shadow-sm transition-all duration-300 hover:border-indigo-400 hover:shadow-xl hover:shadow-indigo-500/10"
+                    class="group relative flex flex-col justify-between rounded-3xl border border-slate-200 bg-white p-8 shadow-sm transition-all duration-300 hover:border-blue-400 hover:shadow-xl hover:-translate-y-1"
                 >
                     <div>
                         <div class="flex items-center justify-between">
-                            <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-600 text-white shadow-md shadow-indigo-600/25">
+                            <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-700 text-white shadow-xs">
                                 <Glasses class="h-7 w-7" />
                             </div>
-                            <span class="rounded-full bg-indigo-100 px-2.5 py-0.5 text-[10px] font-bold text-indigo-800 uppercase tracking-wider">
+                            <span class="rounded-full bg-blue-50 border border-blue-200 px-2.5 py-0.5 text-[10px] font-bold text-blue-700 uppercase tracking-wider">
                                 Pilar Teknologi
                             </span>
                         </div>
@@ -156,21 +148,21 @@ const props = defineProps({
                         </p>
                         <div class="mt-5 space-y-2 text-xs font-medium text-slate-700">
                             <div class="flex items-center gap-2">
-                                <span class="h-1.5 w-1.5 rounded-full bg-indigo-600"></span>
+                                <span class="h-1.5 w-1.5 rounded-full bg-blue-700"></span>
                                 <span>Virtual tour 360° properti & arsitektur</span>
                             </div>
                             <div class="flex items-center gap-2">
-                                <span class="h-1.5 w-1.5 rounded-full bg-indigo-600"></span>
+                                <span class="h-1.5 w-1.5 rounded-full bg-blue-700"></span>
                                 <span>Simulasi pelatihan K3 / safety training</span>
                             </div>
                             <div class="flex items-center gap-2">
-                                <span class="h-1.5 w-1.5 rounded-full bg-indigo-600"></span>
+                                <span class="h-1.5 w-1.5 rounded-full bg-blue-700"></span>
                                 <span>Showroom produk & museum virtual</span>
                             </div>
                         </div>
                     </div>
-                    <div class="mt-8 pt-6 border-t border-indigo-100 flex items-center justify-between">
-                        <span class="text-xs font-semibold text-indigo-700">Meta Quest & 360 HD</span>
+                    <div class="mt-8 pt-6 border-t border-slate-100 flex items-center justify-between">
+                        <span class="text-xs font-semibold text-blue-700">Meta Quest & 360 HD</span>
                         <span class="text-xs font-bold text-slate-900">Mulai 2.4Jt</span>
                     </div>
                 </div>

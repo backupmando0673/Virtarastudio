@@ -26,7 +26,7 @@ const currentYear = new Date().getFullYear();
                 <!-- Brand Column -->
                 <div class="lg:col-span-2">
                     <div class="flex items-center gap-2.5">
-                        <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 to-amber-500 text-white shadow-md shadow-blue-500/25">
+                        <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-white shadow-xs">
                             <Sparkles class="h-5 w-5" />
                         </div>
                         <span class="text-xl font-extrabold tracking-tight text-white">

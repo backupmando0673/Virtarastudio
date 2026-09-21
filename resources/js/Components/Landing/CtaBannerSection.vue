@@ -14,21 +14,13 @@ const props = defineProps({
     <section class="relative bg-white py-16 md:py-24">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div
-                class="relative overflow-hidden rounded-3xl border border-slate-200 bg-gradient-to-br from-blue-700 via-indigo-700 to-amber-600 px-6 py-14 sm:px-12 sm:py-20 text-white shadow-2xl shadow-blue-500/15"
+                class="relative overflow-hidden rounded-3xl border border-slate-800 bg-slate-900 px-6 py-14 sm:px-12 sm:py-20 text-white shadow-xl"
             >
-                <!-- Decorative background circles -->
-                <div
-                    class="pointer-events-none absolute -top-24 -right-24 h-96 w-96 rounded-full bg-amber-400/20 blur-3xl"
-                />
-                <div
-                    class="pointer-events-none absolute -bottom-24 -left-24 h-96 w-96 rounded-full bg-blue-500/20 blur-3xl"
-                />
-
                 <div class="relative mx-auto max-w-3xl text-center">
                     <div
-                        class="inline-flex items-center gap-2 rounded-full bg-white/20 px-4 py-1.5 text-xs font-semibold text-white backdrop-blur-sm"
+                        class="inline-flex items-center gap-2 rounded-full border border-slate-700 bg-slate-800 px-4 py-1.5 text-xs font-semibold text-slate-200"
                     >
-                        <Sparkles class="h-3.5 w-3.5 text-amber-300" />
+                        <Sparkles class="h-3.5 w-3.5 text-amber-400" />
                         <span>Mulai Langkah Digital Anda Bersama Kami</span>
                     </div>
 
@@ -36,7 +28,7 @@ const props = defineProps({
                         Siap Mewujudkan Website, App Android, Game, atau AR/VR Anda?
                     </h2>
 
-                    <p class="mt-6 text-base sm:text-lg text-blue-100 leading-relaxed max-w-2xl mx-auto">
+                    <p class="mt-6 text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl mx-auto">
                         Kombinasikan ide kreatif Anda dengan keahlian teknis kami. Konsultasikan kebutuhan proyek Anda via WhatsApp—100% gratis tanpa komitmen apapun.
                     </p>
 
@@ -47,24 +39,24 @@ const props = defineProps({
                             target="_blank"
                             rel="noopener noreferrer"
                             size="lg"
-                            class="w-full sm:w-auto gap-2.5 bg-white text-slate-900 hover:bg-slate-50 font-bold shadow-xl shadow-black/10 text-base hover:scale-105 transition-all"
+                            class="w-full sm:w-auto gap-2.5 bg-amber-500 hover:bg-amber-600 text-white font-bold shadow-md border-0 text-base transition-all hover:-translate-y-0.5"
                         >
-                            <MessageCircle class="h-5 w-5 text-[#25D366]" />
+                            <MessageCircle class="h-5 w-5" />
                             Hubungi via WhatsApp Sekarang
                         </Button>
                     </div>
 
-                    <div class="mt-8 flex flex-wrap items-center justify-center gap-6 text-xs sm:text-sm font-medium text-blue-100">
+                    <div class="mt-8 flex flex-wrap items-center justify-center gap-6 text-xs sm:text-sm font-medium text-slate-300">
                         <div class="flex items-center gap-2">
-                            <CheckCircle2 class="h-4 w-4 text-amber-300" />
+                            <CheckCircle2 class="h-4 w-4 text-amber-400" />
                             <span>Konsultasi 100% Bebas Biaya</span>
                         </div>
                         <div class="flex items-center gap-2">
-                            <CheckCircle2 class="h-4 w-4 text-amber-300" />
+                            <CheckCircle2 class="h-4 w-4 text-blue-400" />
                             <span>Estimasi Biaya Transparan</span>
                         </div>
                         <div class="flex items-center gap-2">
-                            <CheckCircle2 class="h-4 w-4 text-amber-300" />
+                            <CheckCircle2 class="h-4 w-4 text-emerald-400" />
                             <span>Respons Cepat & Ramah</span>
                         </div>
                     </div>
