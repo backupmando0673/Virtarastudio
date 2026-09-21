@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'Admin Virtarastudio',
                 'password' => Hash::make('password'),
+                'email_verified_at' => now(),
             ]
         );
 
