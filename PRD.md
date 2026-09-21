@@ -57,8 +57,8 @@ Model konversi utama berfokus pada **Lead Generation cepat via WhatsApp (Konsult
    - Subheadline penjelas nilai tambah (Cepat, Berkualitas, Harga Terjangkau).
    - 2 Tombol Aksi: Primary Button (Chat WhatsApp) & Secondary Button (Lihat Layanan).
    - Badges kepercayaan: "Konsultasi 100% Gratis", "Pengerjaan Cepat & Bergaransi".
-3. **Services Grid (5 Layanan Utama)**:
-   - Kartu interaktif untuk 5 layanan:
+3. **Services Grid (Layanan Utama)**:
+   - Kartu interaktif untuk layanan digital:
      - Website Murah
      - App Android
      - Game Android
@@ -102,7 +102,7 @@ Contoh template pesan:
    - Headline & deskripsi hero.
    - Link media sosial (Instagram, LinkedIn, GitHub, TikTok).
 3. **Modul Manajemen Jasa (Services)**:
-   - CRUD untuk 5 layanan: judul, slug, deskripsi ringkas, icon, fitur poin-poin (JSON array), harga awal, template pesan WhatsApp, status aktif.
+   - CRUD untuk layanan: judul, slug, deskripsi ringkas, icon, fitur poin-poin (JSON array), harga awal, template pesan WhatsApp, status aktif.
 4. **Modul Portofolio (Portfolios)**:
    - CRUD item portofolio: judul, kategori (relasi ke service atau enum), gambar, deskripsi, tautan demo/preview.
 5. **Modul Testimoni & FAQ**:

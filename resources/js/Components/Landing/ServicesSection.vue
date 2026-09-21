@@ -105,7 +105,7 @@ const getServiceMeta = (slug) => {
                     <span class="text-blue-600 font-bold">Teknologi Modern</span>
                 </div>
                 <h2 class="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
-                    5 Layanan Unggulan Virtarastudio
+                    Layanan Unggulan Virtarastudio
                 </h2>
                 <p class="mt-4 text-base text-slate-600 sm:text-lg leading-relaxed">
                     Setiap produk menggabungkan estetika desain visual kreatif dengan kestabilan teknologi rekayasa software.

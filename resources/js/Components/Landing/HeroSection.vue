@@ -90,7 +90,7 @@ const heroSubtitle = props.settings.hero_subtitle || 'Jasa pembuatan website mur
                             variant="outline"
                             class="w-full sm:w-auto gap-2 font-semibold border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 hover:border-blue-300 transition-all"
                         >
-                            Lihat 5 Layanan Kami
+                            Lihat Layanan Kami
                             <ArrowRight class="h-4 w-4" />
                         </Button>
                     </div>
@@ -126,7 +126,7 @@ const heroSubtitle = props.settings.hero_subtitle || 'Jasa pembuatan website mur
                                     <span class="text-xs font-bold text-slate-600 ml-1">Virtara Studio Ecosystem</span>
                                 </div>
                                 <span class="rounded-full bg-slate-100 px-2.5 py-0.5 text-[10px] font-bold text-slate-600 uppercase">
-                                    5 Layanan
+                                    Layanan Unggulan
                                 </span>
                             </div>
 

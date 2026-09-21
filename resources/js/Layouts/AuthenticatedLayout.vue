@@ -53,7 +53,7 @@ const showingNavigationDropdown = ref(false);
                                     :active="route().current('admin.services.*')"
                                     class="text-sm font-medium"
                                 >
-                                    5 Layanan
+                                    Layanan
                                 </NavLink>
                                 <NavLink
                                     :href="route('admin.portfolios.index')"
@@ -161,7 +161,7 @@ const showingNavigationDropdown = ref(false);
                             Pengaturan Landing Page
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('admin.services.index')" :active="route().current('admin.services.*')">
-                            5 Layanan
+                            Layanan
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('admin.portfolios.index')" :active="route().current('admin.portfolios.*')">
                             Portofolio

@@ -57,7 +57,7 @@ File ini berfungsi sebagai panduan langkah kerja (actionable checklist) bagi AI 
 - [x] **Task 3.5**: Buat migrasi & model [Faq.php](file:///D:/Website/laragon/www/Virtarastudio/app/Models/Faq.php):
   - Kolom: `question`, `answer`, `sort_order`, `is_active`.
 - [x] **Task 3.6**: Buat Database Seeder komprehensif di [DatabaseSeeder.php](file:///D:/Website/laragon/www/Virtarastudio/database/seeders/DatabaseSeeder.php):
-  - Mengisi default data 5 layanan:
+  - Mengisi default data awal layanan:
     1. *Pembuatan Website Murah* (Company profile, toko online, custom web)
     2. *Pembuatan App Android* (Aplikasi bisnis, marketplace, utility)
     3. *Pembuatan Game Android* (Game 2D/3D casual & edukasi)
@@ -79,7 +79,7 @@ File ini berfungsi sebagai panduan langkah kerja (actionable checklist) bagi AI 
   - Subheadline persuasif & 2 tombol aksi (WhatsApp CTA & Jelajahi Layanan).
   - Ilustrasi / Visual mockup modern (Kombinasi Web, Mobile, AR/VR).
 - [x] **Task 4.3**: Rancang komponen [ServicesSection.vue](file:///D:/Website/laragon/www/Virtarastudio/resources/js/Components/Landing/ServicesSection.vue):
-  - Grid 5 layanan utama.
+  - Grid layanan utama.
   - Badges fitur, harga "Mulai dari...", dan tombol langsung: *"Konsultasi Layanan Ini"*.
 - [x] **Task 4.4**: Rancang komponen [ImmersiveTechSection.vue](file:///D:/Website/laragon/www/Virtarastudio/resources/js/Components/Landing/ImmersiveTechSection.vue):
   - Showcase khusus kemampuan Game Development, AR (Augmented Reality), dan VR (Virtual Reality) sebagai USP utama Virtarastudio.

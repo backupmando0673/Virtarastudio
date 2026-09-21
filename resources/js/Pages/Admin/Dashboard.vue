@@ -136,7 +136,7 @@ const props = defineProps({
                         <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
                             <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-5">
                                 <div>
-                                    <h3 class="text-base font-bold text-slate-900">5 Layanan Ditawarkan</h3>
+                                    <h3 class="text-base font-bold text-slate-900">Layanan Ditawarkan</h3>
                                     <p class="text-xs text-slate-500">Edit harga, fitur, atau pesan WhatsApp per layanan</p>
                                 </div>
                                 <Link
