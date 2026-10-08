@@ -13,6 +13,10 @@ const props = defineProps({
         type: String,
         default: 'Virtarastudio',
     },
+    siteLogo: {
+        type: String,
+        default: null,
+    },
 });
 
 const mobileMenuOpen = ref(false);
@@ -31,24 +35,33 @@ const navLinks = [
         class="sticky top-0 z-40 w-full border-b border-slate-200 bg-white shadow-xs"
     >
         <div class="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-            <!-- Brand Logo: Solid Blue & Solid Amber -->
+            <!-- Brand Logo -->
             <a href="#" class="group flex items-center gap-2.5">
-                <div
-                    class="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-600 text-white shadow-xs transition-transform duration-200 group-hover:scale-105"
-                >
-                    <Sparkles class="h-5 w-5" />
-                </div>
-                <div class="flex flex-col">
-                    <div class="flex items-center text-xl font-extrabold tracking-tight">
-                        <span class="text-slate-900">Virtara</span>
-                        <span class="text-amber-500">studio</span>
+                <template v-if="siteLogo || $page.props.site_settings?.site_logo">
+                    <img
+                        :src="siteLogo || $page.props.site_settings.site_logo"
+                        :alt="siteName"
+                        class="h-11 w-auto max-w-[200px] object-contain transition-transform duration-200 group-hover:scale-105"
+                    />
+                </template>
+                <template v-else>
+                    <div
+                        class="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-600 text-white shadow-xs transition-transform duration-200 group-hover:scale-105"
+                    >
+                        <Sparkles class="h-5 w-5" />
                     </div>
-                    <div class="flex items-center gap-1.5 text-[10px] font-semibold tracking-wider uppercase text-slate-500">
-                        <span class="text-amber-600 font-bold">Seni</span>
-                        <span>&bull;</span>
-                        <span class="text-blue-600 font-bold">Teknologi</span>
+                    <div class="flex flex-col">
+                        <div class="flex items-center text-xl font-extrabold tracking-tight">
+                            <span class="text-slate-900">{{ siteName ? siteName.substring(0, Math.ceil(siteName.length / 2)) : 'Virtara' }}</span>
+                            <span class="text-amber-500">{{ siteName ? siteName.substring(Math.ceil(siteName.length / 2)) : 'studio' }}</span>
+                        </div>
+                        <div class="flex items-center gap-1.5 text-[10px] font-semibold tracking-wider uppercase text-slate-500">
+                            <span class="text-amber-600 font-bold">Seni</span>
+                            <span>&bull;</span>
+                            <span class="text-blue-600 font-bold">Teknologi</span>
+                        </div>
                     </div>
-                </div>
+                </template>
             </a>
 
             <!-- Desktop Nav Links -->

@@ -7,6 +7,7 @@ use App\Models\Faq;
 use App\Models\Portfolio;
 use App\Models\Service;
 use App\Models\SiteSetting;
+use App\Models\Testimonial;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -22,6 +23,7 @@ class AdminDashboardController extends Controller
             'active_services' => Service::where('is_active', true)->count(),
             'total_portfolios' => Portfolio::count(),
             'total_faqs' => Faq::count(),
+            'total_testimonials' => Testimonial::count(),
             'whatsapp_number' => SiteSetting::get('whatsapp_number', '-'),
             'site_name' => SiteSetting::get('site_name', 'Virtarastudio'),
         ];

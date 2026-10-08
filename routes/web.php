@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AdminFaqController;
 use App\Http\Controllers\Admin\AdminPortfolioController;
 use App\Http\Controllers\Admin\AdminServiceController;
 use App\Http\Controllers\Admin\AdminSettingController;
+use App\Http\Controllers\Admin\AdminTestimonialController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -22,11 +23,13 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/settings', [AdminSettingController::class, 'index'])->name('settings.index');
-    Route::put('/settings', [AdminSettingController::class, 'update'])->name('settings.update');
+    Route::match(['put', 'post'], '/settings', [AdminSettingController::class, 'update'])->name('settings.update');
 
     Route::resource('services', AdminServiceController::class);
     Route::resource('portfolios', AdminPortfolioController::class);
     Route::resource('faqs', AdminFaqController::class)->except(['create', 'show', 'edit']);
+    Route::match(['put', 'post'], 'testimonials/{testimonial}', [AdminTestimonialController::class, 'update'])->name('testimonials.update');
+    Route::resource('testimonials', AdminTestimonialController::class)->except(['create', 'show', 'edit', 'update']);
 });
 
 // Breeze Profile Routes

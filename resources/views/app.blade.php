@@ -6,6 +6,16 @@
 
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
+        <!-- Dynamic Site Favicon -->
+        @php
+            $siteFavicon = \App\Models\SiteSetting::get('site_favicon');
+        @endphp
+        @if($siteFavicon)
+            <link rel="icon" href="{{ asset($siteFavicon) }}">
+        @else
+            <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+        @endif
+
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />

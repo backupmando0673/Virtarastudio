@@ -51,6 +51,11 @@ defineProps({
             name="description"
             :content="settings.site_tagline || 'Layanan pembuatan website murah, aplikasi Android, game interaktif, AR, dan VR dengan konsultasi gratis via WhatsApp.'"
         />
+        <link
+            v-if="settings.site_favicon || $page.props.site_settings?.site_favicon"
+            rel="icon"
+            :href="settings.site_favicon || $page.props.site_settings.site_favicon"
+        />
     </Head>
 
     <div class="min-h-screen bg-white text-slate-900 selection:bg-blue-600 selection:text-white font-sans antialiased">
@@ -58,6 +63,7 @@ defineProps({
         <Navbar
             :whatsapp-url="whatsappUrl"
             :site-name="settings.site_name"
+            :site-logo="settings.site_logo"
         />
 
         <main>

@@ -23,12 +23,21 @@ const showingNavigationDropdown = ref(false);
                             <!-- Logo -->
                             <div class="flex shrink-0 items-center">
                                 <Link :href="route('admin.dashboard')" class="flex items-center gap-2">
-                                    <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-orange-500 text-white shadow-sm">
-                                        <Sparkles class="h-4 w-4" />
-                                    </div>
-                                    <span class="font-bold text-slate-900 text-base">
-                                        Virtara<span class="text-orange-500">CMS</span>
-                                    </span>
+                                    <template v-if="$page.props.site_settings?.site_logo">
+                                        <img
+                                            :src="$page.props.site_settings.site_logo"
+                                            alt="Logo"
+                                            class="h-9 w-auto max-w-[150px] object-contain"
+                                        />
+                                    </template>
+                                    <template v-else>
+                                        <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-orange-500 text-white shadow-sm">
+                                            <Sparkles class="h-4 w-4" />
+                                        </div>
+                                        <span class="font-bold text-slate-900 text-base">
+                                            Virtara<span class="text-orange-500">CMS</span>
+                                        </span>
+                                    </template>
                                 </Link>
                             </div>
 
@@ -68,6 +77,13 @@ const showingNavigationDropdown = ref(false);
                                     class="text-sm font-medium"
                                 >
                                     FAQ
+                                </NavLink>
+                                <NavLink
+                                    :href="route('admin.testimonials.index')"
+                                    :active="route().current('admin.testimonials.*')"
+                                    class="text-sm font-medium"
+                                >
+                                    Testimoni
                                 </NavLink>
                             </div>
                         </div>
@@ -168,6 +184,9 @@ const showingNavigationDropdown = ref(false);
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('admin.faqs.index')" :active="route().current('admin.faqs.*')">
                             FAQ
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('admin.testimonials.index')" :active="route().current('admin.testimonials.*')">
+                            Testimoni Klien
                         </ResponsiveNavLink>
                         <a href="/" target="_blank" class="block py-2 px-3 text-base font-medium text-orange-600">
                             Lihat Website Publik &rarr;

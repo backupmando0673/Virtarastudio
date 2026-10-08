@@ -26,12 +26,21 @@ const currentYear = new Date().getFullYear();
                 <!-- Brand Column -->
                 <div class="lg:col-span-2">
                     <div class="flex items-center gap-2.5">
-                        <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-white shadow-xs">
-                            <Sparkles class="h-5 w-5" />
-                        </div>
-                        <span class="text-xl font-extrabold tracking-tight text-white">
-                            Virtara<span class="text-amber-400">studio</span>
-                        </span>
+                        <template v-if="settings.site_logo || $page.props.site_settings?.site_logo">
+                            <img
+                                :src="settings.site_logo || $page.props.site_settings.site_logo"
+                                :alt="settings.site_name || 'Virtarastudio'"
+                                class="h-10 w-auto max-w-[200px] object-contain bg-white/10 p-1 rounded-lg"
+                            />
+                        </template>
+                        <template v-else>
+                            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-white shadow-xs">
+                                <Sparkles class="h-5 w-5" />
+                            </div>
+                            <span class="text-xl font-extrabold tracking-tight text-white">
+                                {{ settings.site_name ? settings.site_name.substring(0, Math.ceil(settings.site_name.length / 2)) : 'Virtara' }}<span class="text-amber-400">{{ settings.site_name ? settings.site_name.substring(Math.ceil(settings.site_name.length / 2)) : 'studio' }}</span>
+                            </span>
+                        </template>
                     </div>
                     <p class="mt-4 text-sm text-slate-400 leading-relaxed max-w-sm">
                         {{ settings.site_tagline || 'Studio perpaduan seni visual kreatif dan kecanggihan rekayasa teknologi: Website murah, aplikasi Android, game 2D/3D, serta solusi masa depan Augmented Reality (AR) & Virtual Reality (VR).' }}
