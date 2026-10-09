@@ -1,12 +1,24 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, useForm, Link } from '@inertiajs/vue3';
 import { Card, CardContent, CardFooter } from '@/Components/ui/card';
 import { Button } from '@/Components/ui/button';
 import { Input } from '@/Components/ui/input';
 import { Textarea } from '@/Components/ui/textarea';
-import { ArrowLeft, Check, Upload, Image as ImageIcon, Trash2, Link as LinkIcon } from '@lucide/vue';
+import { Badge } from '@/Components/ui/badge';
+import {
+    ArrowLeft,
+    Check,
+    Upload,
+    Image as ImageIcon,
+    Trash2,
+    Star,
+    Plus,
+    Link as LinkIcon,
+    Layers,
+    CheckCircle2,
+} from '@lucide/vue';
 
 const props = defineProps({
     portfolio: {
@@ -27,7 +39,28 @@ const initialTechs = props.portfolio?.technologies
         : props.portfolio.technologies
     : '';
 
-const imagePreview = ref(props.portfolio?.image_url || null);
+// Prepare initial gallery list
+const initialGallery = Array.isArray(props.portfolio?.gallery_images)
+    ? [...props.portfolio.gallery_images]
+    : props.portfolio?.image_url
+    ? [props.portfolio.image_url]
+    : [];
+
+// If image_url not in gallery, add it
+if (props.portfolio?.image_url && !initialGallery.includes(props.portfolio.image_url)) {
+    initialGallery.unshift(props.portfolio.image_url);
+}
+
+const galleryItems = ref(
+    initialGallery.map((url, index) => ({
+        id: `existing-${index}-${Date.now()}`,
+        url,
+        file: null,
+        isExisting: true,
+    }))
+);
+
+const customImageUrl = ref('');
 const fileInput = ref(null);
 
 const form = useForm({
@@ -36,9 +69,9 @@ const form = useForm({
     title: props.portfolio?.title || '',
     client_name: props.portfolio?.client_name || '',
     description: props.portfolio?.description || '',
-    image: null,
-    image_url: props.portfolio?.image_url || '',
-    remove_image: false,
+    image_url: props.portfolio?.image_url || initialGallery[0] || '',
+    gallery_images: initialGallery,
+    new_gallery_images: [],
     demo_url: props.portfolio?.demo_url || '',
     technologies_input: initialTechs,
     technologies: [],
@@ -46,12 +79,33 @@ const form = useForm({
     sort_order: props.portfolio?.sort_order || 0,
 });
 
-const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-        form.image = file;
-        form.remove_image = false;
-        imagePreview.value = URL.createObjectURL(file);
+// If no cover image set yet, set the first item
+if (!form.image_url && galleryItems.value.length > 0) {
+    form.image_url = galleryItems.value[0].url;
+}
+
+const handleFilesChange = (e) => {
+    const files = Array.from(e.target.files || []);
+    if (!files.length) return;
+
+    files.forEach((file) => {
+        const previewUrl = URL.createObjectURL(file);
+        const item = {
+            id: `new-${file.name}-${Date.now()}-${Math.random()}`,
+            url: previewUrl,
+            file: file,
+            isExisting: false,
+        };
+        galleryItems.value.push(item);
+
+        // If no cover is selected, set this newly uploaded file as cover preview
+        if (!form.image_url) {
+            form.image_url = previewUrl;
+        }
+    });
+
+    if (fileInput.value) {
+        fileInput.value.value = '';
     }
 };
 
@@ -59,20 +113,35 @@ const triggerFileInput = () => {
     fileInput.value?.click();
 };
 
-const removeImage = () => {
-    form.image = null;
-    form.image_url = '';
-    form.remove_image = true;
-    imagePreview.value = null;
-    if (fileInput.value) {
-        fileInput.value.value = '';
+const addCustomUrl = () => {
+    const url = customImageUrl.value.trim();
+    if (!url) return;
+
+    if (!galleryItems.value.some((item) => item.url === url)) {
+        galleryItems.value.push({
+            id: `url-${Date.now()}`,
+            url: url,
+            file: null,
+            isExisting: true,
+        });
+
+        if (!form.image_url) {
+            form.image_url = url;
+        }
     }
+    customImageUrl.value = '';
 };
 
-const handleUrlChange = () => {
-    if (form.image_url && !form.image) {
-        imagePreview.value = form.image_url;
-        form.remove_image = false;
+const setAsCover = (item) => {
+    form.image_url = item.url;
+};
+
+const removeGalleryItem = (itemToRemove) => {
+    galleryItems.value = galleryItems.value.filter((item) => item.id !== itemToRemove.id);
+
+    // If removed item was cover image, reassign to another item
+    if (form.image_url === itemToRemove.url) {
+        form.image_url = galleryItems.value.length > 0 ? galleryItems.value[0].url : '';
     }
 };
 
@@ -85,6 +154,24 @@ const submit = () => {
         : [];
 
     form.technologies = techArray;
+
+    // Separate existing URLs and newly uploaded files
+    form.gallery_images = galleryItems.value
+        .filter((item) => item.isExisting)
+        .map((item) => item.url);
+
+    form.new_gallery_images = galleryItems.value
+        .filter((item) => !item.isExisting && item.file)
+        .map((item) => item.file);
+
+    // If form.image_url is a blob url (from a new file), pass the filename or let controller assign it
+    if (form.image_url.startsWith('blob:')) {
+        const matchingNewItem = galleryItems.value.find((item) => item.url === form.image_url);
+        if (matchingNewItem && matchingNewItem.file) {
+            // Controller will automatically match or pick the first new file
+            form.image_url = '';
+        }
+    }
 
     if (isEdit) {
         form.post(route('admin.portfolios.update', props.portfolio.id), {
@@ -108,33 +195,33 @@ const submit = () => {
             <div class="flex items-center gap-4">
                 <Link
                     :href="route('admin.portfolios.index')"
-                    class="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 transition"
+                    class="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 transition shadow-2xs"
                 >
                     <ArrowLeft class="h-4 w-4" />
                 </Link>
                 <div>
                     <h2 class="text-2xl font-bold text-slate-900 tracking-tight">
-                        {{ isEdit ? 'Edit Portofolio' : 'Tambah Portofolio Baru' }}
+                        {{ isEdit ? 'Edit Portofolio & Galeri' : 'Tambah Portofolio & Galeri' }}
                     </h2>
                     <p class="text-sm text-slate-500 mt-0.5">
-                        Lengkapi foto dan detail hasil karya untuk ditampilkan pada showcase website.
+                        Kelola foto-foto proyek (multi-gambar galeri), pilih cover utama, dan informasi lengkap proyek.
                     </p>
                 </div>
             </div>
         </template>
 
         <div class="py-8">
-            <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+            <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
                 <Card class="border-slate-200">
                     <form @submit.prevent="submit">
-                        <CardContent class="space-y-6 p-6 sm:p-8">
+                        <CardContent class="space-y-7 p-6 sm:p-8">
                             <!-- Judul & Kategori -->
                             <div class="grid gap-4 sm:grid-cols-2">
                                 <div>
                                     <label class="block text-xs font-semibold text-slate-700 uppercase mb-1.5">
                                         Judul Portofolio *
                                     </label>
-                                    <Input v-model="form.title" placeholder="Nama proyek..." required />
+                                    <Input v-model="form.title" placeholder="Contoh: E-Commerce & Company Profile Artisan Coffee" required />
                                     <span v-if="form.errors.title" class="text-xs text-red-500 mt-1 block">
                                         {{ form.errors.title }}
                                     </span>
@@ -149,7 +236,7 @@ const submit = () => {
                                         class="flex h-11 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:outline-none focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10"
                                         required
                                     >
-                                        <option value="website">Website</option>
+                                        <option value="website">Website (Web & Design)</option>
                                         <option value="android">Android App</option>
                                         <option value="game">Game Android</option>
                                         <option value="ar">AR (Augmented Reality)</option>
@@ -167,7 +254,7 @@ const submit = () => {
                                     <label class="block text-xs font-semibold text-slate-700 uppercase mb-1.5">
                                         Nama Klien / Brand (Opsional)
                                     </label>
-                                    <Input v-model="form.client_name" placeholder="Contoh: PT ABC / Toko Kopi" />
+                                    <Input v-model="form.client_name" placeholder="Contoh: PT Artisan Roastery Indonesia" />
                                     <span v-if="form.errors.client_name" class="text-xs text-red-500 mt-1 block">
                                         {{ form.errors.client_name }}
                                     </span>
@@ -192,126 +279,165 @@ const submit = () => {
                                 </div>
                             </div>
 
-                            <!-- Upload Foto / Gambar Showcase -->
-                            <div class="rounded-2xl border border-slate-200 bg-slate-50/50 p-5 space-y-4">
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-900 uppercase tracking-wide">
-                                        Foto / Gambar Portofolio
-                                    </label>
-                                    <p class="text-xs text-slate-500 mt-0.5">
-                                        Upload file gambar hasil karya proyek (Format: PNG, JPG, JPEG, WebP, SVG. Maks 3MB).
+                            <!-- Multi-Image Gallery & Cover Selector -->
+                            <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 sm:p-6 space-y-4">
+                                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                                    <div>
+                                        <div class="flex items-center gap-2">
+                                            <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wide">
+                                                Galeri Foto Portofolio (Banyak Foto)
+                                            </h3>
+                                            <span class="rounded-full bg-orange-100 px-2.5 py-0.5 text-[11px] font-bold text-orange-800">
+                                                {{ galleryItems.length }} Gambar
+                                            </span>
+                                        </div>
+                                        <p class="text-xs text-slate-500 mt-0.5">
+                                            Upload multiple foto untuk galeri detail proyek. Klik bintang <strong>"Jadikan Cover"</strong> pada foto yang ingin dijadikan gambar utama.
+                                        </p>
+                                    </div>
+
+                                    <Button
+                                        type="button"
+                                        variant="default"
+                                        size="sm"
+                                        class="gap-2 text-xs font-bold shrink-0"
+                                        @click="triggerFileInput"
+                                    >
+                                        <Upload class="h-4 w-4" />
+                                        Upload Foto Galeri
+                                    </Button>
+                                </div>
+
+                                <input
+                                    ref="fileInput"
+                                    type="file"
+                                    multiple
+                                    accept="image/png,image/jpeg,image/jpg,image/webp,image/svg+xml"
+                                    class="hidden"
+                                    @change="handleFilesChange"
+                                />
+
+                                <!-- Gallery Grid -->
+                                <div
+                                    v-if="galleryItems.length > 0"
+                                    class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3.5 pt-2"
+                                >
+                                    <div
+                                        v-for="item in galleryItems"
+                                        :key="item.id"
+                                        class="group relative aspect-video rounded-xl border-2 overflow-hidden bg-white shadow-2xs transition-all duration-200"
+                                        :class="[
+                                            form.image_url === item.url
+                                                ? 'border-orange-500 ring-2 ring-orange-500/20 shadow-md'
+                                                : 'border-slate-200 hover:border-slate-300',
+                                        ]"
+                                    >
+                                        <img
+                                            :src="item.url"
+                                            alt="Gallery item"
+                                            class="h-full w-full object-cover"
+                                        />
+
+                                        <!-- Badge Cover -->
+                                        <div
+                                            v-if="form.image_url === item.url"
+                                            class="absolute top-2 left-2 z-10 flex items-center gap-1 rounded-md bg-orange-600 px-2 py-0.5 text-[10px] font-bold text-white shadow-sm"
+                                        >
+                                            <Star class="h-3 w-3 fill-current" />
+                                            <span>Cover Utama</span>
+                                        </div>
+
+                                        <!-- Action Overlay on Hover -->
+                                        <div
+                                            class="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-between p-2"
+                                        >
+                                            <div class="flex justify-end">
+                                                <button
+                                                    type="button"
+                                                    @click="removeGalleryItem(item)"
+                                                    class="h-7 w-7 rounded-lg bg-red-600 text-white flex items-center justify-center hover:bg-red-700 transition shadow-sm"
+                                                    title="Hapus gambar ini dari galeri"
+                                                >
+                                                    <Trash2 class="h-3.5 w-3.5" />
+                                                </button>
+                                            </div>
+
+                                            <div v-if="form.image_url !== item.url">
+                                                <button
+                                                    type="button"
+                                                    @click="setAsCover(item)"
+                                                    class="w-full rounded-md bg-white/95 py-1 text-[11px] font-bold text-slate-800 hover:bg-orange-500 hover:text-white transition flex items-center justify-center gap-1 shadow-sm"
+                                                >
+                                                    <Star class="h-3 w-3" />
+                                                    Jadikan Cover
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Empty Gallery State -->
+                                <div
+                                    v-else
+                                    @click="triggerFileInput"
+                                    class="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-slate-300 bg-white p-8 text-center cursor-pointer hover:border-orange-400 hover:bg-orange-50/20 transition group"
+                                >
+                                    <div class="h-12 w-12 rounded-2xl bg-orange-50 text-orange-600 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+                                        <ImageIcon class="h-6 w-6" />
+                                    </div>
+                                    <p class="text-xs font-bold text-slate-700">Belum ada foto dalam galeri</p>
+                                    <p class="text-[11px] text-slate-500 mt-0.5">
+                                        Klik di sini untuk memilih satu atau beberapa file gambar sekaligus.
                                     </p>
                                 </div>
 
-                                <div class="grid gap-5 sm:grid-cols-12 items-start">
-                                    <!-- Image Preview Area -->
-                                    <div class="sm:col-span-5">
-                                        <div
-                                            class="relative aspect-video w-full rounded-xl border-2 border-dashed border-slate-200 bg-white overflow-hidden flex flex-col items-center justify-center group shadow-2xs"
+                                <!-- Add via URL option -->
+                                <div class="pt-3 border-t border-slate-200/80">
+                                    <label class="block text-[11px] font-semibold text-slate-600 mb-1">
+                                        Atau tambahkan URL gambar eksternal ke galeri:
+                                    </label>
+                                    <div class="flex gap-2">
+                                        <div class="relative flex-1">
+                                            <Input
+                                                v-model="customImageUrl"
+                                                placeholder="https://images.unsplash.com/..."
+                                                class="text-xs h-9 pl-8"
+                                                @keydown.enter.prevent="addCustomUrl"
+                                            />
+                                            <LinkIcon class="h-3.5 w-3.5 text-slate-400 absolute left-2.5 top-3" />
+                                        </div>
+                                        <Button
+                                            type="button"
+                                            variant="outline"
+                                            size="sm"
+                                            class="gap-1.5 text-xs font-semibold"
+                                            @click="addCustomUrl"
                                         >
-                                            <template v-if="imagePreview">
-                                                <img
-                                                    :src="imagePreview"
-                                                    alt="Preview Portofolio"
-                                                    class="h-full w-full object-cover"
-                                                />
-                                                <div
-                                                    class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2"
-                                                >
-                                                    <button
-                                                        type="button"
-                                                        @click="triggerFileInput"
-                                                        class="rounded-lg bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-sm hover:bg-slate-50 transition"
-                                                    >
-                                                        Ganti
-                                                    </button>
-                                                    <button
-                                                        type="button"
-                                                        @click="removeImage"
-                                                        class="rounded-lg bg-red-600 px-3 py-1.5 text-xs font-semibold text-white shadow-sm hover:bg-red-700 transition"
-                                                    >
-                                                        Hapus
-                                                    </button>
-                                                </div>
-                                            </template>
-                                            <template v-else>
-                                                <div class="flex flex-col items-center justify-center p-4 text-center cursor-pointer" @click="triggerFileInput">
-                                                    <div class="h-10 w-10 rounded-full bg-orange-50 flex items-center justify-center text-orange-600 mb-2">
-                                                        <ImageIcon class="h-5 w-5" />
-                                                    </div>
-                                                    <span class="text-xs font-medium text-slate-600">Belum ada gambar</span>
-                                                    <span class="text-[11px] text-slate-400 mt-0.5">Klik untuk upload</span>
-                                                </div>
-                                            </template>
-                                        </div>
-                                    </div>
-
-                                    <!-- Upload Controls & URL fallback -->
-                                    <div class="sm:col-span-7 space-y-3">
-                                        <input
-                                            ref="fileInput"
-                                            type="file"
-                                            accept="image/png,image/jpeg,image/jpg,image/webp,image/svg+xml"
-                                            class="hidden"
-                                            @change="handleImageChange"
-                                        />
-
-                                        <div class="flex flex-wrap gap-2">
-                                            <Button
-                                                type="button"
-                                                variant="outline"
-                                                size="sm"
-                                                class="gap-2 text-xs font-semibold border-slate-300"
-                                                @click="triggerFileInput"
-                                            >
-                                                <Upload class="h-3.5 w-3.5 text-orange-600" />
-                                                {{ imagePreview ? 'Pilih Gambar Baru' : 'Upload File Gambar' }}
-                                            </Button>
-
-                                            <Button
-                                                v-if="imagePreview"
-                                                type="button"
-                                                variant="outline"
-                                                size="sm"
-                                                class="gap-2 text-xs font-semibold border-red-200 text-red-600 hover:bg-red-50"
-                                                @click="removeImage"
-                                            >
-                                                <Trash2 class="h-3.5 w-3.5" />
-                                                Hapus Gambar
-                                            </Button>
-                                        </div>
-
-                                        <div class="pt-2 border-t border-slate-200/80">
-                                            <label class="block text-[11px] font-semibold text-slate-600 mb-1">
-                                                Atau gunakan URL Gambar Eksternal:
-                                            </label>
-                                            <div class="relative">
-                                                <Input
-                                                    v-model="form.image_url"
-                                                    placeholder="https://images.unsplash.com/..."
-                                                    class="text-xs h-9 pl-8"
-                                                    @input="handleUrlChange"
-                                                />
-                                                <LinkIcon class="h-3.5 w-3.5 text-slate-400 absolute left-2.5 top-3" />
-                                            </div>
-                                        </div>
-
-                                        <span v-if="form.errors.image" class="text-xs text-red-500 block">
-                                            {{ form.errors.image }}
-                                        </span>
-                                        <span v-if="form.errors.image_url" class="text-xs text-red-500 block">
-                                            {{ form.errors.image_url }}
-                                        </span>
+                                            <Plus class="h-3.5 w-3.5" />
+                                            Tambah URL
+                                        </Button>
                                     </div>
                                 </div>
+
+                                <span v-if="form.errors.new_gallery_images" class="text-xs text-red-500 block">
+                                    {{ form.errors.new_gallery_images }}
+                                </span>
+                                <span v-if="form.errors.image_url" class="text-xs text-red-500 block">
+                                    {{ form.errors.image_url }}
+                                </span>
                             </div>
 
-                            <!-- Deskripsi Singkat -->
+                            <!-- Deskripsi Lengkap Proyek -->
                             <div>
                                 <label class="block text-xs font-semibold text-slate-700 uppercase mb-1.5">
-                                    Deskripsi Singkat Proyek
+                                    Deskripsi Hasil Karya / Studi Kasus Proyek *
                                 </label>
-                                <Textarea v-model="form.description" rows="3" placeholder="Jelaskan fitur atau hasil karya..." />
+                                <Textarea
+                                    v-model="form.description"
+                                    rows="5"
+                                    placeholder="Jelaskan secara mendalam tentang proyek ini, tantangan yang diselesaikan, fitur utama yang dibangun, dan manfaat bagi klien..."
+                                    required
+                                />
                                 <span v-if="form.errors.description" class="text-xs text-red-500 mt-1 block">
                                     {{ form.errors.description }}
                                 </span>
@@ -323,7 +449,13 @@ const submit = () => {
                                     <label class="block text-xs font-semibold text-slate-700 uppercase mb-1.5">
                                         Tautan Demo / Live Preview (Opsional)
                                     </label>
-                                    <Input v-model="form.demo_url" placeholder="https://..." />
+                                    <Input
+                                        v-model="form.demo_url"
+                                        placeholder="https://nama-website-klien.com (Kosongkan jika tidak ada)"
+                                    />
+                                    <p class="text-[11px] text-slate-400 mt-1">
+                                        Kosongkan jika proyek bersifat internal atau tidak memiliki link demo publik.
+                                    </p>
                                     <span v-if="form.errors.demo_url" class="text-xs text-red-500 mt-1 block">
                                         {{ form.errors.demo_url }}
                                     </span>
@@ -335,8 +467,11 @@ const submit = () => {
                                     </label>
                                     <Input
                                         v-model="form.technologies_input"
-                                        placeholder="Contoh: Laravel, Vue.js, Unity, WebXR"
+                                        placeholder="Contoh: Laravel, Vue.js, Unity, WebXR, PostgreSQL"
                                     />
+                                    <p class="text-[11px] text-slate-400 mt-1">
+                                        Teknologi akan ditampilkan sebagai tag fitur di halaman detail.
+                                    </p>
                                     <span v-if="form.errors.technologies" class="text-xs text-red-500 mt-1 block">
                                         {{ form.errors.technologies }}
                                     </span>
@@ -344,10 +479,10 @@ const submit = () => {
                             </div>
 
                             <!-- Urutan & Featured -->
-                            <div class="flex items-center gap-6 pt-2 border-t border-slate-100">
+                            <div class="flex items-center gap-6 pt-3 border-t border-slate-100">
                                 <div>
                                     <label class="block text-xs font-semibold text-slate-700 uppercase mb-1.5">
-                                        Urutan
+                                        Urutan Tampilan
                                     </label>
                                     <Input v-model="form.sort_order" type="number" min="0" class="w-24" />
                                 </div>
@@ -359,7 +494,7 @@ const submit = () => {
                                             type="checkbox"
                                             class="h-4 w-4 rounded border-slate-300 text-orange-600 focus:ring-orange-500"
                                         />
-                                        <span class="text-sm font-medium text-slate-700">Tandai sebagai Featured</span>
+                                        <span class="text-sm font-medium text-slate-700">Tandai sebagai Featured di Beranda</span>
                                     </label>
                                 </div>
                             </div>
@@ -378,7 +513,7 @@ const submit = () => {
                                 :disabled="form.processing"
                                 variant="default"
                                 size="lg"
-                                class="gap-2 font-bold min-w-[140px]"
+                                class="gap-2 font-bold min-w-[160px]"
                             >
                                 <Check class="h-4 w-4" />
                                 {{ form.processing ? 'Menyimpan...' : (isEdit ? 'Simpan Perubahan' : 'Tambah Portofolio') }}

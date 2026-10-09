@@ -20,6 +20,7 @@ class Portfolio extends Model
         'client_name',
         'description',
         'image_url',
+        'gallery_images',
         'demo_url',
         'technologies',
         'is_featured',
@@ -34,6 +35,7 @@ class Portfolio extends Model
     protected function casts(): array
     {
         return [
+            'gallery_images' => 'array',
             'technologies' => 'array',
             'is_featured' => 'boolean',
             'sort_order' => 'integer',

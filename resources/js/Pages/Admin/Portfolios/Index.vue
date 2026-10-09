@@ -4,7 +4,7 @@ import { Head, Link, router } from '@inertiajs/vue3';
 import { Card, CardHeader, CardTitle, CardContent } from '@/Components/ui/card';
 import { Button } from '@/Components/ui/button';
 import { Badge } from '@/Components/ui/badge';
-import { Plus, Edit3, Trash2, CheckCircle2, ExternalLink } from '@lucide/vue';
+import { Plus, Edit3, Trash2, CheckCircle2, ExternalLink, Eye, Images } from '@lucide/vue';
 
 const props = defineProps({
     portfolios: {
@@ -28,10 +28,10 @@ const deleteItem = (id, title) => {
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
                     <h2 class="text-2xl font-bold text-slate-900 tracking-tight">
-                        Portofolio Projek
+                        Portofolio Projek & Galeri
                     </h2>
                     <p class="text-sm text-slate-500 mt-1">
-                        Daftar karya dan showcase hasil pengerjaan tim Virtarastudio.
+                        Daftar karya, galeri multi-gambar, dan showcase hasil pengerjaan tim Virtarastudio.
                     </p>
                 </div>
 
@@ -65,7 +65,7 @@ const deleteItem = (id, title) => {
                         class="overflow-hidden border-slate-200 hover:border-orange-300 transition shadow-sm flex flex-col justify-between"
                     >
                         <div>
-                            <!-- Image -->
+                            <!-- Image & Badges -->
                             <div class="aspect-video w-full bg-slate-100 overflow-hidden relative">
                                 <img
                                     v-if="item.image_url"
@@ -76,10 +76,19 @@ const deleteItem = (id, title) => {
                                 <div v-else class="h-full w-full flex items-center justify-center text-slate-400 text-xs">
                                     Tidak ada gambar
                                 </div>
+
                                 <div class="absolute top-3 left-3">
                                     <Badge variant="orangeSoft" class="capitalize font-bold text-[10px]">
                                         {{ item.category }}
                                     </Badge>
+                                </div>
+
+                                <div
+                                    v-if="item.gallery_images?.length > 1"
+                                    class="absolute top-3 right-3 flex items-center gap-1 rounded-md bg-slate-900/80 px-2 py-0.5 text-[10px] font-bold text-white backdrop-blur-xs"
+                                >
+                                    <Images class="h-3 w-3" />
+                                    <span>{{ item.gallery_images.length }} Foto</span>
                                 </div>
                             </div>
 
@@ -87,7 +96,7 @@ const deleteItem = (id, title) => {
                                 <span v-if="item.client_name" class="text-xs text-slate-400 block font-medium">
                                     {{ item.client_name }}
                                 </span>
-                                <h3 class="text-base font-bold text-slate-900 mt-1">
+                                <h3 class="text-base font-bold text-slate-900 mt-1 line-clamp-1">
                                     {{ item.title }}
                                 </h3>
                                 <p class="text-xs text-slate-500 mt-2 line-clamp-2">
@@ -97,29 +106,29 @@ const deleteItem = (id, title) => {
                         </div>
 
                         <div class="border-t border-slate-100 p-4 flex items-center justify-between bg-slate-50/50">
+                            <!-- View Public Detail Page -->
                             <a
-                                v-if="item.demo_url"
-                                :href="item.demo_url"
+                                :href="route('portfolio.show', item.slug)"
                                 target="_blank"
-                                rel="noopener noreferrer"
-                                class="inline-flex items-center gap-1 text-xs font-semibold text-slate-600 hover:text-orange-600"
+                                class="inline-flex items-center gap-1 text-xs font-semibold text-blue-600 hover:text-blue-800 transition"
                             >
-                                <span>Preview</span>
-                                <ExternalLink class="h-3 w-3" />
+                                <Eye class="h-3.5 w-3.5" />
+                                <span>Lihat Detail</span>
                             </a>
-                            <span v-else></span>
 
                             <div class="flex items-center gap-2">
                                 <Link
                                     :href="route('admin.portfolios.edit', item.id)"
-                                    class="inline-flex items-center justify-center h-8 w-8 rounded-lg bg-white border border-slate-200 text-slate-600 hover:text-orange-600 hover:border-orange-300 transition"
+                                    class="inline-flex items-center justify-center h-8 w-8 rounded-lg bg-white border border-slate-200 text-slate-600 hover:text-orange-600 hover:border-orange-300 transition shadow-2xs"
+                                    title="Edit Portofolio"
                                 >
                                     <Edit3 class="h-3.5 w-3.5" />
                                 </Link>
                                 <button
                                     type="button"
-                                    class="inline-flex items-center justify-center h-8 w-8 rounded-lg bg-white border border-slate-200 text-red-500 hover:bg-red-50 hover:border-red-300 transition"
+                                    class="inline-flex items-center justify-center h-8 w-8 rounded-lg bg-white border border-slate-200 text-red-500 hover:bg-red-50 hover:border-red-300 transition shadow-2xs cursor-pointer"
                                     @click="deleteItem(item.id, item.title)"
+                                    title="Hapus Portofolio"
                                 >
                                     <Trash2 class="h-3.5 w-3.5" />
                                 </button>

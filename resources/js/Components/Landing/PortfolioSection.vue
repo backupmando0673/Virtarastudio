@@ -1,8 +1,22 @@
 <script setup>
 import { ref, computed } from 'vue';
+import { Link } from '@inertiajs/vue3';
 import { Card, CardContent } from '@/Components/ui/card';
 import { Badge } from '@/Components/ui/badge';
-import { Sparkles, ExternalLink, Palette, Cpu, Globe, Smartphone, Gamepad2, Glasses, Layers, Image as ImageIcon } from '@lucide/vue';
+import {
+    Sparkles,
+    ExternalLink,
+    Palette,
+    Cpu,
+    Globe,
+    Smartphone,
+    Gamepad2,
+    Glasses,
+    Layers,
+    Image as ImageIcon,
+    ArrowRight,
+    Images,
+} from '@lucide/vue';
 
 const props = defineProps({
     portfolios: {
@@ -50,7 +64,7 @@ const getCategoryBadgeClass = (category) => {
                     Portofolio & Hasil Pengerjaan Kami
                 </h2>
                 <p class="mt-4 text-base text-slate-600 sm:text-lg leading-relaxed">
-                    Lihat hasil perpaduan desain visual dan rekayasa software yang telah kami selesaikan untuk berbagai klien.
+                    Lihat hasil perpaduan desain visual dan rekayasa software yang telah kami selesaikan untuk berbagai klien. Klik proyek untuk melihat galeri dan detail lengkap.
                 </p>
             </div>
 
@@ -94,8 +108,11 @@ const getCategoryBadgeClass = (category) => {
                     class="group overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-slate-300 hover:shadow-xl flex flex-col justify-between"
                 >
                     <div>
-                        <!-- Image Wrapper -->
-                        <div class="relative aspect-video w-full overflow-hidden bg-slate-100">
+                        <!-- Image Wrapper (Links to detail) -->
+                        <Link
+                            :href="route('portfolio.show', project.slug)"
+                            class="relative block aspect-video w-full overflow-hidden bg-slate-100"
+                        >
                             <img
                                 v-if="project.image_url"
                                 :src="project.image_url"
@@ -118,26 +135,25 @@ const getCategoryBadgeClass = (category) => {
                                 </span>
                             </div>
 
-                            <!-- Demo URL overlay icon -->
-                            <a
-                                v-if="project.demo_url"
-                                :href="project.demo_url"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="absolute bottom-3 right-3 flex h-8 w-8 items-center justify-center rounded-xl bg-white/90 text-slate-800 shadow-md backdrop-blur-sm transition-all hover:scale-110 hover:bg-white"
-                                title="Lihat Demo Langsung"
+                            <!-- Gallery Count Badge if multiple images -->
+                            <div
+                                v-if="project.gallery_images?.length > 1"
+                                class="absolute top-3 right-3 flex items-center gap-1 rounded-full bg-slate-900/80 px-2.5 py-0.5 text-[10px] font-bold text-white backdrop-blur-xs shadow-xs"
                             >
-                                <ExternalLink class="h-4 w-4" />
-                            </a>
-                        </div>
+                                <Images class="h-3 w-3" />
+                                <span>{{ project.gallery_images.length }} Foto</span>
+                            </div>
+                        </Link>
 
                         <!-- Content -->
                         <div class="p-6">
-                            <span v-if="project.client_name" class="text-xs font-semibold text-slate-400">
+                            <span v-if="project.client_name" class="text-xs font-semibold text-slate-400 block">
                                 Klien: {{ project.client_name }}
                             </span>
                             <h3 class="mt-1 text-lg font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
-                                {{ project.title }}
+                                <Link :href="route('portfolio.show', project.slug)" class="hover:underline">
+                                    {{ project.title }}
+                                </Link>
                             </h3>
                             <p class="mt-2 text-xs sm:text-sm text-slate-600 line-clamp-2 leading-relaxed">
                                 {{ project.description }}
@@ -156,16 +172,25 @@ const getCategoryBadgeClass = (category) => {
                         </div>
                     </div>
 
-                    <!-- Footer Link if Demo exists -->
-                    <div v-if="project.demo_url" class="border-t border-slate-100 px-6 py-3 bg-slate-50/50 flex items-center justify-between">
-                        <span class="text-xs text-slate-500 font-medium">Live Project</span>
+                    <!-- Footer Action: Link to Detail & Optional Demo -->
+                    <div class="border-t border-slate-100 px-6 py-3.5 bg-slate-50/60 flex items-center justify-between">
+                        <Link
+                            :href="route('portfolio.show', project.slug)"
+                            class="inline-flex items-center gap-1.5 text-xs font-bold text-slate-800 hover:text-blue-600 transition-colors group-hover:text-blue-600"
+                        >
+                            <span>Lihat Detail Proyek</span>
+                            <ArrowRight class="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+                        </Link>
+
                         <a
+                            v-if="project.demo_url && project.demo_url !== 'https://example.com'"
                             :href="project.demo_url"
                             target="_blank"
                             rel="noopener noreferrer"
-                            class="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-700 transition-colors"
+                            class="inline-flex items-center gap-1 text-[11px] font-semibold text-slate-500 hover:text-emerald-600 transition-colors"
+                            title="Buka Website/Demo Langsung"
                         >
-                            <span>Buka Projek</span>
+                            <span>Live Demo</span>
                             <ExternalLink class="h-3 w-3" />
                         </a>
                     </div>

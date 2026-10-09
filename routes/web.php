@@ -10,8 +10,9 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-// Public Landing Page
+// Public Landing Page & Portfolio Detail
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/portofolio/{slug}', [HomeController::class, 'portfolioDetail'])->name('portfolio.show');
 
 // Dashboard redirect
 Route::get('/dashboard', function () {

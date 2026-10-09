@@ -51,6 +51,7 @@ class HomeController extends Controller
                     'client_name' => $portfolio->client_name,
                     'description' => $portfolio->description,
                     'image_url' => $portfolio->image_url,
+                    'gallery_images' => $portfolio->gallery_images ?? [],
                     'demo_url' => $portfolio->demo_url,
                     'technologies' => $portfolio->technologies ?? [],
                     'is_featured' => $portfolio->is_featured,
@@ -75,6 +76,43 @@ class HomeController extends Controller
             'testimonials' => $testimonials,
             'faqs' => $faqs,
             'whatsappUrl' => $defaultWaUrl,
+        ]);
+    }
+
+    /**
+     * Display the detailed view of a single portfolio project.
+     */
+    public function portfolioDetail(string $slug): Response
+    {
+        $portfolio = Portfolio::with('service')
+            ->where('slug', $slug)
+            ->firstOrFail();
+
+        $settings = SiteSetting::allKeyValues();
+        $whatsappNumber = $settings['whatsapp_number'] ?? '6281234567890';
+
+        $relatedPortfolios = Portfolio::where('id', '!=', $portfolio->id)
+            ->where(function ($query) use ($portfolio) {
+                $query->where('category', $portfolio->category)
+                    ->orWhere('service_id', $portfolio->service_id);
+            })
+            ->take(3)
+            ->get();
+
+        if ($relatedPortfolios->isEmpty()) {
+            $relatedPortfolios = Portfolio::where('id', '!=', $portfolio->id)
+                ->orderBy('sort_order')
+                ->take(3)
+                ->get();
+        }
+
+        $projectWaUrl = 'https://wa.me/'.preg_replace('/[^0-9]/', '', $whatsappNumber).'?text='.rawurlencode('Halo Virtarastudio, saya tertarik untuk membuat proyek digital seperti "'.$portfolio->title.'". Boleh konsultasi detailnya?');
+
+        return Inertia::render('Portfolio/Show', [
+            'portfolio' => $portfolio,
+            'relatedPortfolios' => $relatedPortfolios,
+            'settings' => $settings,
+            'whatsappUrl' => $projectWaUrl,
         ]);
     }
 }
