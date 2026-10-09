@@ -29,6 +29,7 @@ class LandingPageTest extends TestCase
             'starting_price' => 'Rp 499.000',
             'whatsapp_template' => 'Halo Virtarastudio',
             'sort_order' => 1,
+            'is_featured' => true,
             'is_active' => true,
         ]);
 

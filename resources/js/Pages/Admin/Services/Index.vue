@@ -119,6 +119,9 @@ const deleteService = (service) => {
                                 </div>
                                 <div class="flex items-center gap-2">
                                     <span class="text-[11px] font-semibold text-slate-400">Urutan #{{ service.sort_order }}</span>
+                                    <span v-if="service.is_featured" class="rounded-md bg-amber-100 px-2 py-0.5 text-[10px] font-bold text-amber-800">
+                                        Unggulan
+                                    </span>
                                     <Badge :variant="service.is_active ? 'greenSoft' : 'secondary'">
                                         {{ service.is_active ? 'Aktif' : 'Nonaktif' }}
                                     </Badge>

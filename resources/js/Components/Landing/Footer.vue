@@ -99,9 +99,6 @@ const currentYear = new Date().getFullYear();
                             <a href="#services" class="hover:text-blue-400 transition-colors">Layanan</a>
                         </li>
                         <li>
-                            <a href="#immersive" class="hover:text-blue-400 transition-colors">Teknologi AR / VR</a>
-                        </li>
-                        <li>
                             <a href="#portfolio" class="hover:text-blue-400 transition-colors">Portofolio</a>
                         </li>
                         <li>

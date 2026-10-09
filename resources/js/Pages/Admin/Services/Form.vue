@@ -41,6 +41,7 @@ const form = useForm({
     starting_price: props.service?.starting_price || '',
     features_input: initialFeaturesText.value,
     whatsapp_template: props.service?.whatsapp_template || '',
+    is_featured: props.service ? Boolean(props.service.is_featured) : true,
     is_active: props.service ? Boolean(props.service.is_active) : true,
     sort_order: props.service?.sort_order ?? 0,
 });
@@ -68,6 +69,7 @@ const submit = () => {
         starting_price: form.starting_price,
         features: featuresArray,
         whatsapp_template: form.whatsapp_template,
+        is_featured: form.is_featured,
         is_active: form.is_active,
         sort_order: Number(form.sort_order),
     };
@@ -251,15 +253,26 @@ const submit = () => {
                             </div>
 
                             <!-- Status -->
-                            <div class="pt-2 border-t border-slate-100">
-                                <label class="inline-flex items-center gap-2.5 cursor-pointer">
+                            <div class="pt-2 border-t border-slate-100 space-y-3">
+                                <label class="inline-flex items-center gap-2.5 cursor-pointer block">
+                                    <input
+                                        v-model="form.is_featured"
+                                        type="checkbox"
+                                        class="h-4 w-4 rounded border-slate-300 text-amber-500 focus:ring-amber-400"
+                                    />
+                                    <span class="text-sm font-medium text-slate-800">
+                                        Jadikan Layanan Unggulan (Tampilkan di Halaman Utama)
+                                    </span>
+                                </label>
+
+                                <label class="inline-flex items-center gap-2.5 cursor-pointer block">
                                     <input
                                         v-model="form.is_active"
                                         type="checkbox"
                                         class="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
                                     />
                                     <span class="text-sm font-medium text-slate-800">
-                                        Tampilkan Layanan Ini di Landing Page (Aktif)
+                                        Status Layanan Aktif
                                     </span>
                                 </label>
                             </div>

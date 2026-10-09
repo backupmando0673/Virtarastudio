@@ -22,6 +22,7 @@ class HomeController extends Controller
         $whatsappNumber = $settings['whatsapp_number'] ?? '6281234567890';
 
         $services = Service::where('is_active', true)
+            ->where('is_featured', true)
             ->orderBy('sort_order')
             ->get()
             ->map(function (Service $service) use ($whatsappNumber) {

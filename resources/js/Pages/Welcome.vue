@@ -3,7 +3,6 @@ import { Head } from '@inertiajs/vue3';
 import Navbar from '@/Components/Landing/Navbar.vue';
 import HeroSection from '@/Components/Landing/HeroSection.vue';
 import ServicesSection from '@/Components/Landing/ServicesSection.vue';
-import ImmersiveTechSection from '@/Components/Landing/ImmersiveTechSection.vue';
 import WhyUsSection from '@/Components/Landing/WhyUsSection.vue';
 import PortfolioSection from '@/Components/Landing/PortfolioSection.vue';
 import TestimonialsSection from '@/Components/Landing/TestimonialsSection.vue';
@@ -76,11 +75,6 @@ defineProps({
             <!-- 5 Services Section -->
             <ServicesSection
                 :services="services"
-            />
-
-            <!-- Special Immersive AR/VR & Game Section -->
-            <ImmersiveTechSection
-                :whatsapp-url="whatsappUrl"
             />
 
             <!-- Why Choose Us -->

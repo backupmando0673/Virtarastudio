@@ -23,7 +23,6 @@ const mobileMenuOpen = ref(false);
 
 const navLinks = [
     { name: 'Layanan', href: '#services' },
-    { name: 'AR/VR & Game', href: '#immersive' },
     { name: 'Keunggulan', href: '#why-us' },
     { name: 'Portofolio', href: '#portfolio' },
     { name: 'FAQ', href: '#faq' },

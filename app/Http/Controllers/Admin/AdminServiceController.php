@@ -48,6 +48,7 @@ class AdminServiceController extends Controller
             'features.*' => ['string', 'max:255'],
             'starting_price' => ['required', 'string', 'max:100'],
             'whatsapp_template' => ['nullable', 'string'],
+            'is_featured' => ['boolean'],
             'is_active' => ['boolean'],
             'sort_order' => ['integer'],
         ]);
@@ -90,6 +91,7 @@ class AdminServiceController extends Controller
             'features.*' => ['string', 'max:255'],
             'starting_price' => ['required', 'string', 'max:100'],
             'whatsapp_template' => ['nullable', 'string'],
+            'is_featured' => ['boolean'],
             'is_active' => ['boolean'],
             'sort_order' => ['integer'],
         ]);
