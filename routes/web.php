@@ -26,7 +26,8 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::match(['put', 'post'], '/settings', [AdminSettingController::class, 'update'])->name('settings.update');
 
     Route::resource('services', AdminServiceController::class);
-    Route::resource('portfolios', AdminPortfolioController::class);
+    Route::match(['put', 'post'], 'portfolios/{portfolio}', [AdminPortfolioController::class, 'update'])->name('portfolios.update');
+    Route::resource('portfolios', AdminPortfolioController::class)->except(['update']);
     Route::resource('faqs', AdminFaqController::class)->except(['create', 'show', 'edit']);
     Route::match(['put', 'post'], 'testimonials/{testimonial}', [AdminTestimonialController::class, 'update'])->name('testimonials.update');
     Route::resource('testimonials', AdminTestimonialController::class)->except(['create', 'show', 'edit', 'update']);
