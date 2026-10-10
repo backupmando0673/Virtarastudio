@@ -20,6 +20,10 @@ defineProps({
         type: Object,
         default: () => ({}),
     },
+    categories: {
+        type: Array,
+        default: () => [],
+    },
     services: {
         type: Array,
         default: () => [],
@@ -83,6 +87,7 @@ defineProps({
             <!-- Portfolio Showcase -->
             <PortfolioSection
                 :portfolios="portfolios"
+                :categories="categories"
             />
 
             <!-- Testimonials -->

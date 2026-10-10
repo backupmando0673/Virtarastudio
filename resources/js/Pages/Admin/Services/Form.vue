@@ -22,6 +22,10 @@ const props = defineProps({
         type: Object,
         default: null,
     },
+    categories: {
+        type: Array,
+        default: () => [],
+    },
 });
 
 const isEditing = computed(() => Boolean(props.service && props.service.id));
@@ -34,6 +38,7 @@ const initialFeaturesText = computed(() => {
 });
 
 const form = useForm({
+    category_id: props.service?.category_id || '',
     name: props.service?.name || '',
     tagline: props.service?.tagline || '',
     description: props.service?.description || '',
@@ -62,6 +67,7 @@ const submit = () => {
         .filter((f) => f.length > 0);
 
     const payload = {
+        category_id: form.category_id || null,
         name: form.name,
         tagline: form.tagline,
         description: form.description,
@@ -111,7 +117,7 @@ const submit = () => {
                     <form @submit.prevent="submit">
                         <CardContent class="space-y-6 p-6 sm:p-8">
                             <!-- Basic Information -->
-                            <div class="grid gap-4 sm:grid-cols-2">
+                            <div class="grid gap-4 sm:grid-cols-3">
                                 <div>
                                     <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
                                         Nama Layanan *
@@ -128,11 +134,29 @@ const submit = () => {
 
                                 <div>
                                     <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
-                                        Tagline / Slogan Singkat
+                                        Kategori Jasa
+                                    </label>
+                                    <select
+                                        v-model="form.category_id"
+                                        class="flex h-11 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:outline-none focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10"
+                                    >
+                                        <option value="">-- Pilih Kategori Jasa --</option>
+                                        <option v-for="cat in categories" :key="cat.id" :value="cat.id">
+                                            {{ cat.name }} ({{ cat.pillar === 'art' ? 'Seni' : 'Tech' }})
+                                        </option>
+                                    </select>
+                                    <span v-if="form.errors.category_id" class="text-xs text-red-500 mt-1 block">
+                                        {{ form.errors.category_id }}
+                                    </span>
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
+                                        Tagline / Slogan
                                     </label>
                                     <Input
                                         v-model="form.tagline"
-                                        placeholder="Contoh: Cepat, Elegan, & SEO Friendly"
+                                        placeholder="Contoh: Cepat, Elegan, & SEO"
                                     />
                                     <span v-if="form.errors.tagline" class="text-xs text-red-500 mt-1 block">
                                         {{ form.errors.tagline }}

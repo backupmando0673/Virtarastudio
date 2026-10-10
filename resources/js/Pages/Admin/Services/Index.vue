@@ -128,9 +128,17 @@ const deleteService = (service) => {
                                 </div>
                             </div>
 
-                            <CardTitle class="mt-4 text-lg font-bold text-slate-900">
-                                {{ service.name }}
-                            </CardTitle>
+                            <div class="mt-4 flex flex-wrap items-center gap-2">
+                                <CardTitle class="text-lg font-bold text-slate-900">
+                                    {{ service.name }}
+                                </CardTitle>
+                                <span
+                                    v-if="service.category"
+                                    class="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-semibold text-slate-600 border border-slate-200"
+                                >
+                                    {{ service.category.name }}
+                                </span>
+                            </div>
                             <span v-if="service.tagline" class="text-xs font-semibold text-orange-600">
                                 {{ service.tagline }}
                             </span>

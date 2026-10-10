@@ -14,6 +14,7 @@ class Portfolio extends Model
      */
     protected $fillable = [
         'service_id',
+        'category_id',
         'category',
         'title',
         'slug',
@@ -26,6 +27,14 @@ class Portfolio extends Model
         'is_featured',
         'sort_order',
     ];
+
+    /**
+     * Get the service category for this portfolio item.
+     */
+    public function serviceCategory(): BelongsTo
+    {
+        return $this->belongsTo(ServiceCategory::class, 'category_id');
+    }
 
     /**
      * Get the attributes that should be cast.

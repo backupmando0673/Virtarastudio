@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Faq;
 use App\Models\Portfolio;
 use App\Models\Service;
+use App\Models\ServiceCategory;
 use App\Models\SiteSetting;
 use App\Models\Testimonial;
 use Inertia\Inertia;
@@ -19,6 +20,7 @@ class AdminDashboardController extends Controller
     public function index(): Response
     {
         $stats = [
+            'total_service_categories' => ServiceCategory::count(),
             'total_services' => Service::count(),
             'active_services' => Service::where('is_active', true)->count(),
             'total_portfolios' => Portfolio::count(),

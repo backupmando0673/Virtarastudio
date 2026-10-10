@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Portfolio;
 use App\Models\Service;
+use App\Models\ServiceCategory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -19,7 +20,7 @@ class AdminPortfolioController extends Controller
      */
     public function index(): Response
     {
-        $portfolios = Portfolio::with('service')->orderBy('sort_order')->get();
+        $portfolios = Portfolio::with(['service', 'serviceCategory'])->orderBy('sort_order')->get();
 
         return Inertia::render('Admin/Portfolios/Index', [
             'portfolios' => $portfolios,
@@ -31,11 +32,13 @@ class AdminPortfolioController extends Controller
      */
     public function create(): Response
     {
-        $services = Service::select('id', 'name')->get();
+        $services = Service::select('id', 'name', 'category_id')->get();
+        $categories = ServiceCategory::where('is_active', true)->orderBy('sort_order')->get();
 
         return Inertia::render('Admin/Portfolios/Form', [
             'portfolio' => null,
             'services' => $services,
+            'categories' => $categories,
         ]);
     }
 
@@ -46,8 +49,10 @@ class AdminPortfolioController extends Controller
     {
         $validated = $request->validate([
             'service_id' => ['nullable', 'exists:services,id'],
-            'category' => ['required', 'string', 'in:website,android,game,ar,vr'],
+            'category_id' => ['nullable', 'exists:service_categories,id'],
+            'category' => ['nullable', 'string', 'max:100'],
             'title' => ['required', 'string', 'max:255'],
+            'slug' => ['nullable', 'string', 'max:255', 'unique:portfolios,slug'],
             'client_name' => ['nullable', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'image' => ['nullable', 'image', 'mimes:png,jpg,jpeg,webp,svg', 'max:5120'],
@@ -95,7 +100,26 @@ class AdminPortfolioController extends Controller
         $validated['gallery_images'] = array_values(array_unique(array_filter($gallery)));
         unset($validated['image'], $validated['new_gallery_images']);
 
-        $validated['slug'] = Str::slug($validated['title']).'-'.time();
+        if (empty($validated['slug'])) {
+            $baseSlug = Str::slug($validated['title']);
+            $slug = $baseSlug;
+            $counter = 1;
+            while (Portfolio::where('slug', $slug)->exists()) {
+                $slug = $baseSlug.'-'.$counter;
+                $counter++;
+            }
+            $validated['slug'] = $slug;
+        } else {
+            $validated['slug'] = Str::slug($validated['slug']);
+        }
+
+        // Auto-fill category string from category_id if provided
+        if (! empty($validated['category_id'])) {
+            $catModel = ServiceCategory::find($validated['category_id']);
+            if ($catModel) {
+                $validated['category'] = $catModel->slug;
+            }
+        }
 
         Portfolio::create($validated);
 
@@ -107,11 +131,13 @@ class AdminPortfolioController extends Controller
      */
     public function edit(Portfolio $portfolio): Response
     {
-        $services = Service::select('id', 'name')->get();
+        $services = Service::select('id', 'name', 'category_id')->get();
+        $categories = ServiceCategory::where('is_active', true)->orderBy('sort_order')->get();
 
         return Inertia::render('Admin/Portfolios/Form', [
             'portfolio' => $portfolio,
             'services' => $services,
+            'categories' => $categories,
         ]);
     }
 
@@ -122,8 +148,10 @@ class AdminPortfolioController extends Controller
     {
         $validated = $request->validate([
             'service_id' => ['nullable', 'exists:services,id'],
-            'category' => ['required', 'string', 'in:website,android,game,ar,vr'],
+            'category_id' => ['nullable', 'exists:service_categories,id'],
+            'category' => ['nullable', 'string', 'max:100'],
             'title' => ['required', 'string', 'max:255'],
+            'slug' => ['nullable', 'string', 'max:255', 'unique:portfolios,slug,'.$portfolio->id],
             'client_name' => ['nullable', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'image' => ['nullable', 'image', 'mimes:png,jpg,jpeg,webp,svg', 'max:5120'],
@@ -138,6 +166,26 @@ class AdminPortfolioController extends Controller
             'sort_order' => ['integer'],
             'remove_image' => ['nullable', 'boolean'],
         ]);
+
+        if (empty($validated['slug'])) {
+            $baseSlug = Str::slug($validated['title']);
+            $slug = $baseSlug;
+            $counter = 1;
+            while (Portfolio::where('slug', $slug)->where('id', '!=', $portfolio->id)->exists()) {
+                $slug = $baseSlug.'-'.$counter;
+                $counter++;
+            }
+            $validated['slug'] = $slug;
+        } else {
+            $validated['slug'] = Str::slug($validated['slug']);
+        }
+
+        if (! empty($validated['category_id'])) {
+            $catModel = ServiceCategory::find($validated['category_id']);
+            if ($catModel) {
+                $validated['category'] = $catModel->slug;
+            }
+        }
 
         $oldImages = array_filter(array_merge(
             [$portfolio->image_url],

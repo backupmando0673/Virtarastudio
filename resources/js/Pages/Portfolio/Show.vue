@@ -84,14 +84,17 @@ const prevImage = () => {
     }
 };
 
-const getCategoryBadgeClass = (category) => {
-    if (category === 'website' || category === 'game') {
+const getCategoryBadgeClass = (category, pillar = null) => {
+    if (pillar === 'art' || category === 'website' || category === 'game') {
         return 'bg-amber-50 text-amber-700 border-amber-200';
     }
     return 'bg-blue-50 text-blue-700 border-blue-200';
 };
 
 const getCategoryLabel = (category) => {
+    if (props.portfolio.service_category?.name) {
+        return props.portfolio.service_category.name;
+    }
     const map = {
         website: 'Website & Digital Design',
         android: 'Android Mobile Application',
@@ -306,7 +309,7 @@ const getCategoryLabel = (category) => {
                                 <div class="divide-y divide-slate-100 text-xs sm:text-sm">
                                     <div class="py-2.5 flex justify-between gap-4">
                                         <span class="text-slate-500">Kategori</span>
-                                        <span class="font-bold text-slate-900 capitalize">{{ portfolio.category }}</span>
+                                        <span class="font-bold text-slate-900 capitalize">{{ portfolio.service_category?.name || portfolio.category }}</span>
                                     </div>
 
                                     <div v-if="portfolio.client_name" class="py-2.5 flex justify-between gap-4">
@@ -407,9 +410,9 @@ const getCategoryLabel = (category) => {
                                     <div class="absolute top-3 left-3">
                                         <span
                                             class="rounded-full border px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider shadow-xs"
-                                            :class="getCategoryBadgeClass(rel.category)"
+                                            :class="getCategoryBadgeClass(rel.category, rel.service_category?.pillar)"
                                         >
-                                            {{ rel.category }}
+                                            {{ rel.service_category?.name || rel.category }}
                                         </span>
                                     </div>
                                 </div>

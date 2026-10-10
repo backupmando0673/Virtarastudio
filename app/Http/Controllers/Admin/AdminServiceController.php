@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Service;
+use App\Models\ServiceCategory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -17,7 +18,7 @@ class AdminServiceController extends Controller
      */
     public function index(): Response
     {
-        $services = Service::orderBy('sort_order')->get();
+        $services = Service::with('category')->orderBy('sort_order')->get();
 
         return Inertia::render('Admin/Services/Index', [
             'services' => $services,
@@ -29,8 +30,11 @@ class AdminServiceController extends Controller
      */
     public function create(): Response
     {
+        $categories = ServiceCategory::where('is_active', true)->orderBy('sort_order')->get();
+
         return Inertia::render('Admin/Services/Form', [
             'service' => null,
+            'categories' => $categories,
         ]);
     }
 
@@ -40,6 +44,7 @@ class AdminServiceController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
+            'category_id' => ['nullable', 'exists:service_categories,id'],
             'name' => ['required', 'string', 'max:255'],
             'tagline' => ['nullable', 'string', 'max:255'],
             'description' => ['required', 'string'],
@@ -72,8 +77,11 @@ class AdminServiceController extends Controller
      */
     public function edit(Service $service): Response
     {
+        $categories = ServiceCategory::where('is_active', true)->orderBy('sort_order')->get();
+
         return Inertia::render('Admin/Services/Form', [
             'service' => $service,
+            'categories' => $categories,
         ]);
     }
 
@@ -83,6 +91,7 @@ class AdminServiceController extends Controller
     public function update(Request $request, Service $service): RedirectResponse
     {
         $validated = $request->validate([
+            'category_id' => ['nullable', 'exists:service_categories,id'],
             'name' => ['required', 'string', 'max:255'],
             'tagline' => ['nullable', 'string', 'max:255'],
             'description' => ['required', 'string'],

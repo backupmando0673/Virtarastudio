@@ -79,7 +79,7 @@ const deleteItem = (id, title) => {
 
                                 <div class="absolute top-3 left-3">
                                     <Badge variant="orangeSoft" class="capitalize font-bold text-[10px]">
-                                        {{ item.category }}
+                                        {{ item.service_category?.name || item.category }}
                                     </Badge>
                                 </div>
 

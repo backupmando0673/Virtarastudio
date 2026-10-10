@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Faq;
 use App\Models\Portfolio;
 use App\Models\Service;
+use App\Models\ServiceCategory;
 use App\Models\SiteSetting;
 use App\Models\Testimonial;
 use Illuminate\Support\Facades\Route;
@@ -21,13 +22,20 @@ class HomeController extends Controller
         $settings = SiteSetting::allKeyValues();
         $whatsappNumber = $settings['whatsapp_number'] ?? '6281234567890';
 
-        $services = Service::where('is_active', true)
+        $categories = ServiceCategory::where('is_active', true)
+            ->orderBy('sort_order')
+            ->get();
+
+        $services = Service::with('category')
+            ->where('is_active', true)
             ->where('is_featured', true)
             ->orderBy('sort_order')
             ->get()
             ->map(function (Service $service) use ($whatsappNumber) {
                 return [
                     'id' => $service->id,
+                    'category_id' => $service->category_id,
+                    'category' => $service->category,
                     'name' => $service->name,
                     'slug' => $service->slug,
                     'tagline' => $service->tagline,
@@ -40,11 +48,14 @@ class HomeController extends Controller
                 ];
             });
 
-        $portfolios = Portfolio::orderBy('sort_order')
+        $portfolios = Portfolio::with('serviceCategory')
+            ->orderBy('sort_order')
             ->get()
             ->map(function (Portfolio $portfolio) {
                 return [
                     'id' => $portfolio->id,
+                    'category_id' => $portfolio->category_id,
+                    'service_category' => $portfolio->serviceCategory,
                     'title' => $portfolio->title,
                     'slug' => $portfolio->slug,
                     'category' => $portfolio->category,
@@ -71,6 +82,7 @@ class HomeController extends Controller
         return Inertia::render('Welcome', [
             'canLogin' => Route::has('login'),
             'settings' => $settings,
+            'categories' => $categories,
             'services' => $services,
             'portfolios' => $portfolios,
             'testimonials' => $testimonials,
@@ -84,23 +96,31 @@ class HomeController extends Controller
      */
     public function portfolioDetail(string $slug): Response
     {
-        $portfolio = Portfolio::with('service')
+        $portfolio = Portfolio::with(['service', 'serviceCategory'])
             ->where('slug', $slug)
             ->firstOrFail();
 
         $settings = SiteSetting::allKeyValues();
         $whatsappNumber = $settings['whatsapp_number'] ?? '6281234567890';
 
-        $relatedPortfolios = Portfolio::where('id', '!=', $portfolio->id)
+        $relatedPortfolios = Portfolio::with('serviceCategory')
+            ->where('id', '!=', $portfolio->id)
             ->where(function ($query) use ($portfolio) {
-                $query->where('category', $portfolio->category)
-                    ->orWhere('service_id', $portfolio->service_id);
+                if ($portfolio->category_id) {
+                    $query->where('category_id', $portfolio->category_id);
+                } else {
+                    $query->where('category', $portfolio->category);
+                }
+                if ($portfolio->service_id) {
+                    $query->orWhere('service_id', $portfolio->service_id);
+                }
             })
             ->take(3)
             ->get();
 
         if ($relatedPortfolios->isEmpty()) {
-            $relatedPortfolios = Portfolio::where('id', '!=', $portfolio->id)
+            $relatedPortfolios = Portfolio::with('serviceCategory')
+                ->where('id', '!=', $portfolio->id)
                 ->orderBy('sort_order')
                 ->take(3)
                 ->get();

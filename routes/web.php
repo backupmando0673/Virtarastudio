@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminFaqController;
 use App\Http\Controllers\Admin\AdminPortfolioController;
+use App\Http\Controllers\Admin\AdminServiceCategoryController;
 use App\Http\Controllers\Admin\AdminServiceController;
 use App\Http\Controllers\Admin\AdminSettingController;
 use App\Http\Controllers\Admin\AdminTestimonialController;
@@ -26,6 +27,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::get('/settings', [AdminSettingController::class, 'index'])->name('settings.index');
     Route::match(['put', 'post'], '/settings', [AdminSettingController::class, 'update'])->name('settings.update');
 
+    Route::resource('service-categories', AdminServiceCategoryController::class)->except(['create', 'show', 'edit']);
     Route::resource('services', AdminServiceController::class);
     Route::match(['put', 'post'], 'portfolios/{portfolio}', [AdminPortfolioController::class, 'update'])->name('portfolios.update');
     Route::resource('portfolios', AdminPortfolioController::class)->except(['update']);

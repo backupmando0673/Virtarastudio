@@ -23,28 +23,46 @@ const props = defineProps({
         type: Array,
         default: () => [],
     },
+    categories: {
+        type: Array,
+        default: () => [],
+    },
 });
 
 const activeCategory = ref('all');
 
-const categories = [
-    { label: 'Semua', value: 'all' },
-    { label: 'Website (Seni & Web)', value: 'website' },
-    { label: 'Android App (Teknologi)', value: 'android' },
-    { label: 'Game Android (Seni)', value: 'game' },
-    { label: 'AR 3D (Teknologi)', value: 'ar' },
-    { label: 'VR 360° (Teknologi)', value: 'vr' },
-];
+const categoryFilterList = computed(() => {
+    if (props.categories && props.categories.length > 0) {
+        return [
+            { label: 'Semua', value: 'all' },
+            ...props.categories.map((c) => ({
+                label: c.name,
+                value: c.slug,
+                pillar: c.pillar,
+            })),
+        ];
+    }
+    return [
+        { label: 'Semua', value: 'all' },
+        { label: 'Website (Seni & Web)', value: 'website' },
+        { label: 'Android App (Teknologi)', value: 'android' },
+        { label: 'Game Android (Seni)', value: 'game' },
+        { label: 'AR 3D (Teknologi)', value: 'ar' },
+        { label: 'VR 360° (Teknologi)', value: 'vr' },
+    ];
+});
 
 const filteredPortfolios = computed(() => {
     if (activeCategory.value === 'all') {
         return props.portfolios;
     }
-    return props.portfolios.filter((p) => p.category === activeCategory.value);
+    return props.portfolios.filter(
+        (p) => p.category === activeCategory.value || p.service_category?.slug === activeCategory.value
+    );
 });
 
-const getCategoryBadgeClass = (category) => {
-    if (category === 'website' || category === 'game') {
+const getCategoryBadgeClass = (category, pillar = null) => {
+    if (pillar === 'art' || category === 'website' || category === 'game') {
         return 'bg-amber-50 text-amber-700 border-amber-200';
     }
     return 'bg-blue-50 text-blue-700 border-blue-200';
@@ -71,7 +89,7 @@ const getCategoryBadgeClass = (category) => {
             <!-- Filter Buttons -->
             <div class="mt-10 flex flex-wrap items-center justify-center gap-2">
                 <button
-                    v-for="cat in categories"
+                    v-for="cat in categoryFilterList"
                     :key="cat.value"
                     type="button"
                     class="rounded-full px-5 py-2 text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer"
@@ -129,9 +147,9 @@ const getCategoryBadgeClass = (category) => {
                             <div class="absolute top-3 left-3">
                                 <span
                                     class="rounded-full border px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider shadow-xs backdrop-blur-xs"
-                                    :class="getCategoryBadgeClass(project.category)"
+                                    :class="getCategoryBadgeClass(project.category, project.service_category?.pillar)"
                                 >
-                                    {{ project.category }}
+                                    {{ project.service_category?.name || project.category }}
                                 </span>
                             </div>
 

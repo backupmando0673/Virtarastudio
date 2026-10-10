@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Service extends Model
@@ -13,6 +14,7 @@ class Service extends Model
      * @var list<string>
      */
     protected $fillable = [
+        'category_id',
         'name',
         'slug',
         'tagline',
@@ -25,6 +27,14 @@ class Service extends Model
         'is_featured',
         'is_active',
     ];
+
+    /**
+     * Get the category that owns the service.
+     */
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(ServiceCategory::class, 'category_id');
+    }
 
     /**
      * Get the attributes that should be cast.

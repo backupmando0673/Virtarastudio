@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Faq;
 use App\Models\Portfolio;
 use App\Models\Service;
+use App\Models\ServiceCategory;
 use App\Models\SiteSetting;
 use App\Models\Testimonial;
 use App\Models\User;
@@ -48,9 +49,69 @@ class DatabaseSeeder extends Seeder
             SiteSetting::set($key, $value);
         }
 
-        // 3. Services (5 Main Services)
+        // 3. Service Categories
+        $categories = [
+            [
+                'name' => 'Website (Seni & Web)',
+                'slug' => 'website',
+                'pillar' => 'art',
+                'icon_name' => 'Globe',
+                'description' => 'Layanan pembuatan website modern, company profile, dan e-commerce.',
+                'sort_order' => 1,
+                'is_active' => true,
+            ],
+            [
+                'name' => 'Android App (Teknologi)',
+                'slug' => 'android',
+                'pillar' => 'tech',
+                'icon_name' => 'Smartphone',
+                'description' => 'Pengembangan aplikasi mobile Android performa tinggi & stabil.',
+                'sort_order' => 2,
+                'is_active' => true,
+            ],
+            [
+                'name' => 'Game Android (Seni & Hiburan)',
+                'slug' => 'game',
+                'pillar' => 'art',
+                'icon_name' => 'Gamepad2',
+                'description' => 'Pembuatan game 2D & 3D interaktif untuk promosi dan edukasi.',
+                'sort_order' => 3,
+                'is_active' => true,
+            ],
+            [
+                'name' => 'AR 3D (Augmented Reality)',
+                'slug' => 'ar',
+                'pillar' => 'tech',
+                'icon_name' => 'Scan',
+                'description' => 'Aplikasi AR interaktif katalog produk 3D dan filter media sosial.',
+                'sort_order' => 4,
+                'is_active' => true,
+            ],
+            [
+                'name' => 'VR 360° (Virtual Reality)',
+                'slug' => 'vr',
+                'pillar' => 'tech',
+                'icon_name' => 'Glasses',
+                'description' => 'Virtual tour 360° dan simulasi pelatihan imersif 3D.',
+                'sort_order' => 5,
+                'is_active' => true,
+            ],
+        ];
+
+        foreach ($categories as $catData) {
+            ServiceCategory::updateOrCreate(['slug' => $catData['slug']], $catData);
+        }
+
+        $webCategory = ServiceCategory::where('slug', 'website')->first();
+        $androidCategory = ServiceCategory::where('slug', 'android')->first();
+        $gameCategory = ServiceCategory::where('slug', 'game')->first();
+        $arCategory = ServiceCategory::where('slug', 'ar')->first();
+        $vrCategory = ServiceCategory::where('slug', 'vr')->first();
+
+        // 4. Services (5 Main Services)
         $services = [
             [
+                'category_id' => $webCategory?->id,
                 'name' => 'Pembuatan Website Murah',
                 'slug' => 'website-murah',
                 'tagline' => 'Desain Modern, Cepat & Ramah Kantong',
@@ -70,6 +131,7 @@ class DatabaseSeeder extends Seeder
                 'is_active' => true,
             ],
             [
+                'category_id' => $androidCategory?->id,
                 'name' => 'Pembuatan App Android',
                 'slug' => 'app-android',
                 'tagline' => 'Aplikasi Mobile Cepat, Ringan & Stabil',
@@ -89,6 +151,7 @@ class DatabaseSeeder extends Seeder
                 'is_active' => true,
             ],
             [
+                'category_id' => $gameCategory?->id,
                 'name' => 'Pembuatan Game Android',
                 'slug' => 'game-android',
                 'tagline' => 'Game Interaktif 2D/3D Seru & Menguntungkan',
@@ -108,6 +171,7 @@ class DatabaseSeeder extends Seeder
                 'is_active' => true,
             ],
             [
+                'category_id' => $arCategory?->id,
                 'name' => 'Pembuatan App AR (Augmented Reality)',
                 'slug' => 'app-ar',
                 'tagline' => 'Interaksi Nyata di Dunia Nyata Melalui Layar',
@@ -127,6 +191,7 @@ class DatabaseSeeder extends Seeder
                 'is_active' => true,
             ],
             [
+                'category_id' => $vrCategory?->id,
                 'name' => 'Pembuatan App VR (Virtual Reality)',
                 'slug' => 'app-vr',
                 'tagline' => 'Simulasi Imersif Masa Depan Tanpa Batas',
@@ -151,7 +216,7 @@ class DatabaseSeeder extends Seeder
             Service::updateOrCreate(['slug' => $serviceData['slug']], $serviceData);
         }
 
-        // 4. Initial Portfolios
+        // 5. Initial Portfolios
         $webService = Service::where('slug', 'website-murah')->first();
         $androidService = Service::where('slug', 'app-android')->first();
         $gameService = Service::where('slug', 'game-android')->first();
@@ -161,6 +226,7 @@ class DatabaseSeeder extends Seeder
         $portfolios = [
             [
                 'service_id' => $webService?->id,
+                'category_id' => $webCategory?->id,
                 'category' => 'website',
                 'title' => 'E-Commerce & Company Profile Artisan Coffee',
                 'slug' => 'artisan-coffee-web',
@@ -179,6 +245,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'service_id' => $androidService?->id,
+                'category_id' => $androidCategory?->id,
                 'category' => 'android',
                 'title' => 'Aplikasi POS & Kasir Pintar UMKM',
                 'slug' => 'pos-pintar-android',
@@ -197,6 +264,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'service_id' => $gameService?->id,
+                'category_id' => $gameCategory?->id,
                 'category' => 'game',
                 'title' => 'Game Petualangan Angka: Math Odyssey 2D',
                 'slug' => 'math-odyssey-game',
@@ -215,6 +283,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'service_id' => $arService?->id,
+                'category_id' => $arCategory?->id,
                 'category' => 'ar',
                 'title' => 'AR Furniture 3D Room Viewer',
                 'slug' => 'ar-furniture-viewer',
@@ -233,6 +302,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'service_id' => $vrService?->id,
+                'category_id' => $vrCategory?->id,
                 'category' => 'vr',
                 'title' => 'Virtual Tour 360° Grand Luxury Residence',
                 'slug' => 'vr-luxury-residence',

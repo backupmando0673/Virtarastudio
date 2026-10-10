@@ -62,7 +62,22 @@ const props = defineProps({
         <div class="py-8">
             <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8">
                 <!-- Stats Row -->
-                <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+                <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+                    <Card class="border-slate-200">
+                        <CardHeader class="flex flex-row items-center justify-between pb-2">
+                            <CardTitle class="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                                Kategori Jasa
+                            </CardTitle>
+                            <FolderKanban class="h-4 w-4 text-amber-500" />
+                        </CardHeader>
+                        <CardContent>
+                            <div class="text-2xl font-black text-slate-900">
+                                {{ stats.total_service_categories || 0 }}
+                            </div>
+                            <p class="text-xs text-slate-500 mt-1">Kategori aktif</p>
+                        </CardContent>
+                    </Card>
+
                     <Card class="border-slate-200">
                         <CardHeader class="flex flex-row items-center justify-between pb-2">
                             <CardTitle class="text-xs font-semibold text-slate-500 uppercase tracking-wider">
@@ -74,7 +89,7 @@ const props = defineProps({
                             <div class="text-2xl font-black text-slate-900">
                                 {{ stats.active_services }} / {{ stats.total_services }}
                             </div>
-                            <p class="text-xs text-slate-500 mt-1">Website, App, Game, AR, VR</p>
+                            <p class="text-xs text-slate-500 mt-1">Website, App, Game, dll</p>
                         </CardContent>
                     </Card>
 

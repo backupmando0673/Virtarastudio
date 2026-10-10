@@ -29,6 +29,10 @@ const props = defineProps({
         type: Array,
         default: () => [],
     },
+    categories: {
+        type: Array,
+        default: () => [],
+    },
 });
 
 const isEdit = Boolean(props.portfolio);
@@ -65,8 +69,10 @@ const fileInput = ref(null);
 
 const form = useForm({
     service_id: props.portfolio?.service_id || '',
+    category_id: props.portfolio?.category_id || '',
     category: props.portfolio?.category || 'website',
     title: props.portfolio?.title || '',
+    slug: props.portfolio?.slug || '',
     client_name: props.portfolio?.client_name || '',
     description: props.portfolio?.description || '',
     image_url: props.portfolio?.image_url || initialGallery[0] || '',
@@ -215,7 +221,7 @@ const submit = () => {
                 <Card class="border-slate-200">
                     <form @submit.prevent="submit">
                         <CardContent class="space-y-7 p-6 sm:p-8">
-                            <!-- Judul & Kategori -->
+                            <!-- Judul & Slug URL -->
                             <div class="grid gap-4 sm:grid-cols-2">
                                 <div>
                                     <label class="block text-xs font-semibold text-slate-700 uppercase mb-1.5">
@@ -229,9 +235,39 @@ const submit = () => {
 
                                 <div>
                                     <label class="block text-xs font-semibold text-slate-700 uppercase mb-1.5">
+                                        Slug URL (Halaman Detail)
+                                    </label>
+                                    <Input
+                                        v-model="form.slug"
+                                        placeholder="Kosongkan untuk otomatis (contoh: artisan-coffee)"
+                                    />
+                                    <p class="text-[11px] text-slate-400 mt-1">
+                                        URL: <span class="font-mono text-slate-600">virtarastudio.com/portofolio/{{ form.slug || 'slug-proyek' }}</span>
+                                    </p>
+                                    <span v-if="form.errors.slug" class="text-xs text-red-500 mt-1 block">
+                                        {{ form.errors.slug }}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Kategori & Klien -->
+                            <div class="grid gap-4 sm:grid-cols-2">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 uppercase mb-1.5">
                                         Kategori Jasa *
                                     </label>
                                     <select
+                                        v-if="categories && categories.length > 0"
+                                        v-model="form.category_id"
+                                        class="flex h-11 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:outline-none focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10"
+                                    >
+                                        <option value="">-- Pilih Kategori Jasa --</option>
+                                        <option v-for="cat in categories" :key="cat.id" :value="cat.id">
+                                            {{ cat.name }}
+                                        </option>
+                                    </select>
+                                    <select
+                                        v-else
                                         v-model="form.category"
                                         class="flex h-11 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:outline-none focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10"
                                         required
@@ -242,8 +278,8 @@ const submit = () => {
                                         <option value="ar">AR (Augmented Reality)</option>
                                         <option value="vr">VR (Virtual Reality)</option>
                                     </select>
-                                    <span v-if="form.errors.category" class="text-xs text-red-500 mt-1 block">
-                                        {{ form.errors.category }}
+                                    <span v-if="form.errors.category_id || form.errors.category" class="text-xs text-red-500 mt-1 block">
+                                        {{ form.errors.category_id || form.errors.category }}
                                     </span>
                                 </div>
                             </div>

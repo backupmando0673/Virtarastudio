@@ -58,6 +58,13 @@ const showingNavigationDropdown = ref(false);
                                     Pengaturan Landing Page
                                 </NavLink>
                                 <NavLink
+                                    :href="route('admin.service-categories.index')"
+                                    :active="route().current('admin.service-categories.*')"
+                                    class="text-sm font-medium"
+                                >
+                                    Kategori Jasa
+                                </NavLink>
+                                <NavLink
                                     :href="route('admin.services.index')"
                                     :active="route().current('admin.services.*')"
                                     class="text-sm font-medium"
@@ -175,6 +182,9 @@ const showingNavigationDropdown = ref(false);
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('admin.settings.index')" :active="route().current('admin.settings.*')">
                             Pengaturan Landing Page
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('admin.service-categories.index')" :active="route().current('admin.service-categories.*')">
+                            Kategori Jasa
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('admin.services.index')" :active="route().current('admin.services.*')">
                             Layanan
