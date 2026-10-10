@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
+        <script defer src="https://analytics.virtarastudio.com/script.js" data-website-id="6411637d-f5ed-43b8-99a6-e65bbd3a9a60"></script>
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Dynamic Site Favicon -->
