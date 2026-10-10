@@ -111,7 +111,7 @@ const getCategoryLabel = (category) => {
         <title>{{ portfolio.title }} - Portofolio {{ settings.site_name || 'Virtarastudio' }}</title>
         <meta
             name="description"
-            :content="portfolio.description ? portfolio.description.substring(0, 160) : 'Detail portofolio proyek dari Virtarastudio.'"
+            :content="portfolio.description ? portfolio.description.substring(0, 160) : 'Detail portofolio proyek dari Virtara studio.'"
         />
         <link
             v-if="settings.site_favicon || $page.props.site_settings?.site_favicon"
@@ -356,7 +356,7 @@ const getCategoryLabel = (category) => {
                             </div>
 
                             <p class="text-xs text-emerald-800 leading-relaxed">
-                                Tim Virtarastudio siap merancang dan mewujudkan solusi digital kustom dengan standar mutu tinggi dan harga terjangkau.
+                                Tim Virtara studio siap merancang dan mewujudkan solusi digital kustom dengan standar mutu tinggi dan harga terjangkau.
                             </p>
 
                             <a
