@@ -16,6 +16,12 @@ import {
     Cpu,
 } from '@lucide/vue';
 
+import { computed } from 'vue';
+
+const icons = {
+    MessageCircle, ArrowRight, CheckCircle2, Globe, Smartphone, Gamepad2, Scan, Glasses, ShieldCheck, Sparkles, Palette, Cpu
+};
+
 const props = defineProps({
     settings: {
         type: Object,
@@ -25,6 +31,37 @@ const props = defineProps({
         type: String,
         default: '#',
     },
+    services: {
+        type: Array,
+        default: () => [],
+    },
+});
+
+const getIcon = (name) => {
+    return icons[name] || CheckCircle2;
+};
+
+const showcaseItems = computed(() => {
+    const items = props.settings.hero_showcase_items || [];
+    if (items.length > 0 && props.services && props.services.length > 0) {
+        return items.map(item => {
+            const service = props.services.find(s => s.id == item.service_id);
+            return {
+                ...item,
+                title: item.title || service?.name || 'Layanan',
+                subtitle: item.subtitle || service?.tagline || '',
+                price: service?.starting_price || '',
+                icon_name: service?.icon_name || 'CheckCircle2'
+            };
+        });
+    }
+    // Fallback if not configured
+    return [
+       { title: 'Website Murah', badge_text: 'SENI', subtitle: 'Landing Page & Toko Online Estetik', price: 'Mulai 499rb', theme: 'amber', icon_name: 'Globe' },
+       { title: 'App Android', badge_text: 'TEKNO', subtitle: 'Aplikasi Bisnis, Kasir & Backend', price: 'Mulai 1.4Jt', theme: 'blue', icon_name: 'Smartphone' },
+       { title: 'Game Android', badge_text: 'SENI', subtitle: 'Visual 2D/3D & Edukasi Seru', price: 'Mulai 1.9Jt', theme: 'amber', icon_name: 'Gamepad2' },
+       { title: 'App AR & VR', badge_text: 'FUTURISTIK', subtitle: '3D Product Viewer & 360° Virtual Tour', price: 'Populer', theme: 'blue', icon_name: 'Scan' },
+    ];
 });
 
 const heroBadge = props.settings.hero_badge || '✨ Harmoni Seni Desain & Rekayasa Teknologi';
@@ -132,80 +169,39 @@ const heroSubtitle = props.settings.hero_subtitle || 'Jasa pembuatan website mur
 
                             <!-- Showcase Grid Items -->
                             <div class="mt-6 space-y-3.5">
-                                <!-- Service 1: Seni Desain Web (Solid) -->
                                 <div
-                                    class="group flex items-center justify-between rounded-xl border border-amber-200 bg-amber-50/50 p-3.5 transition-all hover:border-amber-400"
+                                    v-for="(item, index) in showcaseItems"
+                                    :key="index"
+                                    class="group flex items-center justify-between rounded-xl p-3.5 transition-all shadow-xs"
+                                    :class="
+                                        item.theme === 'amber'
+                                            ? 'border border-amber-200 bg-amber-50/50 hover:border-amber-400'
+                                            : 'border border-blue-200 bg-blue-50/50 hover:border-blue-400'
+                                    "
                                 >
                                     <div class="flex items-center gap-3">
-                                        <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-500 text-white shadow-xs">
-                                            <Globe class="h-5 w-5" />
+                                        <div
+                                            class="flex h-10 w-10 items-center justify-center rounded-lg text-white shadow-xs"
+                                            :class="item.theme === 'amber' ? 'bg-amber-500' : 'bg-blue-600'"
+                                        >
+                                            <component :is="getIcon(item.icon_name)" class="h-5 w-5" />
                                         </div>
                                         <div>
                                             <div class="flex items-center gap-1.5">
-                                                <h4 class="text-sm font-bold text-slate-900">Website Murah</h4>
-                                                <span class="rounded bg-amber-100 px-1.5 py-0.2 text-[9px] font-bold text-amber-700">SENI</span>
+                                                <h4 class="text-sm font-bold text-slate-900">{{ item.title }}</h4>
+                                                <span
+                                                    class="rounded px-1.5 py-0.2 text-[9px] font-bold"
+                                                    :class="item.theme === 'amber' ? 'bg-amber-100 text-amber-700' : 'bg-blue-100 text-blue-700'"
+                                                >
+                                                    {{ item.badge_text }}
+                                                </span>
                                             </div>
-                                            <p class="text-xs text-slate-500">Landing Page & Toko Online Estetik</p>
+                                            <p class="text-xs" :class="item.theme === 'amber' ? 'text-slate-500' : 'text-slate-600'">{{ item.subtitle }}</p>
                                         </div>
                                     </div>
-                                    <span class="text-xs font-bold text-amber-600">Mulai 499rb</span>
-                                </div>
-
-                                <!-- Service 2: Teknologi Mobile Android (Solid) -->
-                                <div
-                                    class="group flex items-center justify-between rounded-xl border border-blue-200 bg-blue-50/50 p-3.5 transition-all hover:border-blue-400"
-                                >
-                                    <div class="flex items-center gap-3">
-                                        <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600 text-white shadow-xs">
-                                            <Smartphone class="h-5 w-5" />
-                                        </div>
-                                        <div>
-                                            <div class="flex items-center gap-1.5">
-                                                <h4 class="text-sm font-bold text-slate-900">App Android</h4>
-                                                <span class="rounded bg-blue-100 px-1.5 py-0.2 text-[9px] font-bold text-blue-700">TEKNO</span>
-                                            </div>
-                                            <p class="text-xs text-slate-500">Aplikasi Bisnis, Kasir & Backend</p>
-                                        </div>
-                                    </div>
-                                    <span class="text-xs font-bold text-blue-600">Mulai 1.4Jt</span>
-                                </div>
-
-                                <!-- Service 3: Seni Game & Gameplay (Solid) -->
-                                <div
-                                    class="group flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 p-3.5 transition-all hover:border-amber-300 hover:bg-amber-50/40"
-                                >
-                                    <div class="flex items-center gap-3">
-                                        <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-500 text-white shadow-xs">
-                                            <Gamepad2 class="h-5 w-5" />
-                                        </div>
-                                        <div>
-                                            <div class="flex items-center gap-1.5">
-                                                <h4 class="text-sm font-bold text-slate-900">Game Android</h4>
-                                                <span class="rounded bg-amber-100 px-1.5 py-0.2 text-[9px] font-bold text-amber-700">SENI</span>
-                                            </div>
-                                            <p class="text-xs text-slate-500">Visual 2D/3D & Edukasi Seru</p>
-                                        </div>
-                                    </div>
-                                    <span class="text-xs font-bold text-amber-600">Mulai 1.9Jt</span>
-                                </div>
-
-                                <!-- Service 4 & 5: AR & VR Immersive Tech (Solid) -->
-                                <div
-                                    class="group flex items-center justify-between rounded-xl border-2 border-blue-400 bg-blue-50/40 p-3.5 transition-all shadow-xs"
-                                >
-                                    <div class="flex items-center gap-3">
-                                        <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600 text-white shadow-xs">
-                                            <Scan class="h-5 w-5" />
-                                        </div>
-                                        <div>
-                                            <div class="flex items-center gap-1.5">
-                                                <h4 class="text-sm font-bold text-slate-900">App AR & VR</h4>
-                                                <span class="rounded bg-blue-100 px-1.5 py-0.2 text-[9px] font-bold text-blue-700">FUTURISTIK</span>
-                                            </div>
-                                            <p class="text-xs text-slate-600">3D Product Viewer & 360° Virtual Tour</p>
-                                        </div>
-                                    </div>
-                                    <Badge class="bg-blue-600 text-white text-[10px]">Populer</Badge>
+                                    <span v-if="item.price" class="text-xs font-bold" :class="item.theme === 'amber' ? 'text-amber-600' : 'text-blue-600'">
+                                        {{ item.price }}
+                                    </span>
                                 </div>
                             </div>
 

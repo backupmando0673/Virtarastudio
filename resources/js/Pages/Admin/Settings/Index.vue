@@ -13,6 +13,10 @@ const props = defineProps({
         type: Object,
         default: () => ({}),
     },
+    services: {
+        type: Array,
+        default: () => [],
+    },
 });
 
 const logoPreview = ref(props.settings.site_logo || null);
@@ -31,11 +35,26 @@ const form = useForm({
     instagram_url: props.settings.instagram_url || '',
     tiktok_url: props.settings.tiktok_url || '',
     linkedin_url: props.settings.linkedin_url || '',
+    hero_showcase_items: props.settings.hero_showcase_items || [],
     site_logo: null,
     site_favicon: null,
     remove_site_logo: false,
     remove_site_favicon: false,
 });
+
+const addShowcaseItem = () => {
+    form.hero_showcase_items.push({
+        service_id: '',
+        title: '',
+        subtitle: '',
+        badge_text: '',
+        theme: 'amber',
+    });
+};
+
+const removeShowcaseItem = (index) => {
+    form.hero_showcase_items.splice(index, 1);
+};
 
 const handleLogoChange = (e) => {
     const file = e.target.files[0];
@@ -423,6 +442,61 @@ const submit = () => {
                                     {{ form.errors.hero_subtitle }}
                                 </span>
                             </div>
+                        </CardContent>
+                    </Card>
+
+                    <!-- Section: Ecosystem Showcase -->
+                    <Card class="border-slate-200 shadow-xs">
+                        <CardHeader>
+                            <CardTitle class="text-lg flex items-center gap-2">
+                                <Monitor class="h-5 w-5 text-indigo-500" />
+                                Daftar Layanan Ekosistem (Kanan Atas Halaman Utama)
+                            </CardTitle>
+                            <CardDescription>
+                                Atur layanan unggulan yang tampil di kotak "Virtara Studio Ecosystem". Harga akan otomatis sinkron dengan data layanan.
+                            </CardDescription>
+                        </CardHeader>
+                        <CardContent class="space-y-4">
+                            <div v-for="(item, index) in form.hero_showcase_items" :key="index" class="border border-slate-200 p-4 rounded-xl space-y-4 bg-slate-50 relative">
+                                <button type="button" @click="removeShowcaseItem(index)" class="absolute top-4 right-4 text-slate-400 hover:text-red-500" title="Hapus">
+                                    <Trash2 class="h-4 w-4" />
+                                </button>
+                                
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 uppercase mb-1.5">Pilih Layanan *</label>
+                                    <select v-model="item.service_id" required class="flex h-10 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                                        <option value="">-- Pilih Layanan --</option>
+                                        <option v-for="srv in services" :key="srv.id" :value="srv.id">
+                                            {{ srv.name }} (Harga: {{ srv.starting_price }})
+                                        </option>
+                                    </select>
+                                </div>
+                                
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-1.5">Judul (Opsional)</label>
+                                        <Input v-model="item.title" class="h-10 text-sm" placeholder="Kosongkan utk pakai bawaan" />
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-1.5">Deskripsi Singkat</label>
+                                        <Input v-model="item.subtitle" class="h-10 text-sm" placeholder="Contoh: Landing Page Estetik" />
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-1.5">Teks Label Kecil</label>
+                                        <Input v-model="item.badge_text" class="h-10 text-sm" placeholder="SENI / TEKNO" />
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-1.5">Tema Warna</label>
+                                        <select v-model="item.theme" class="flex h-10 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                                            <option value="amber">Kuning / Oranye</option>
+                                            <option value="blue">Biru</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <Button v-if="form.hero_showcase_items.length < 5" type="button" variant="outline" @click="addShowcaseItem" class="w-full border-dashed bg-white">
+                                + Tambah Layanan Ekosistem
+                            </Button>
                         </CardContent>
                     </Card>
 

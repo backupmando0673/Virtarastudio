@@ -20,6 +20,12 @@ class HomeController extends Controller
     public function index(): Response
     {
         $settings = SiteSetting::allKeyValues();
+        if (isset($settings['hero_showcase_items'])) {
+            $settings['hero_showcase_items'] = json_decode($settings['hero_showcase_items'], true);
+        } else {
+            $settings['hero_showcase_items'] = [];
+        }
+
         $whatsappNumber = $settings['whatsapp_number'] ?? '6281234567890';
 
         $categories = ServiceCategory::where('is_active', true)

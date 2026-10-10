@@ -18,9 +18,48 @@ class AdminSettingController extends Controller
     public function index(): Response
     {
         $settings = SiteSetting::allKeyValues();
+        if (isset($settings['hero_showcase_items'])) {
+            $settings['hero_showcase_items'] = json_decode($settings['hero_showcase_items'], true);
+        } else {
+            $defaultServices = \App\Models\Service::whereIn('slug', ['website-murah', 'app-android', 'game-android', 'app-ar'])->get()->keyBy('slug');
+            
+            $settings['hero_showcase_items'] = [
+                [
+                    'service_id' => $defaultServices->get('website-murah')?->id,
+                    'title' => 'Website Murah',
+                    'badge_text' => 'SENI',
+                    'subtitle' => 'Landing Page & Toko Online Estetik',
+                    'theme' => 'amber'
+                ],
+                [
+                    'service_id' => $defaultServices->get('app-android')?->id,
+                    'title' => 'App Android',
+                    'badge_text' => 'TEKNO',
+                    'subtitle' => 'Aplikasi Bisnis, Kasir & Backend',
+                    'theme' => 'blue'
+                ],
+                [
+                    'service_id' => $defaultServices->get('game-android')?->id,
+                    'title' => 'Game Android',
+                    'badge_text' => 'SENI',
+                    'subtitle' => 'Visual 2D/3D & Edukasi Seru',
+                    'theme' => 'amber'
+                ],
+                [
+                    'service_id' => $defaultServices->get('app-ar')?->id,
+                    'title' => 'App AR & VR',
+                    'badge_text' => 'FUTURISTIK',
+                    'subtitle' => '3D Product Viewer & 360° Virtual Tour',
+                    'theme' => 'blue'
+                ]
+            ];
+        }
+
+        $services = \App\Models\Service::select('id', 'name', 'starting_price', 'icon_name')->where('is_active', true)->get();
 
         return Inertia::render('Admin/Settings/Index', [
             'settings' => $settings,
+            'services' => $services,
         ]);
     }
 
@@ -46,6 +85,7 @@ class AdminSettingController extends Controller
             'site_favicon' => ['nullable', 'file', 'mimes:png,jpg,jpeg,ico,svg,webp', 'max:1024'],
             'remove_site_logo' => ['nullable', 'boolean'],
             'remove_site_favicon' => ['nullable', 'boolean'],
+            'hero_showcase_items' => ['nullable', 'array'],
         ]);
 
         // Handle site_logo deletion
@@ -95,6 +135,10 @@ class AdminSettingController extends Controller
             if (array_key_exists($field, $validated)) {
                 SiteSetting::set($field, $validated[$field]);
             }
+        }
+
+        if ($request->has('hero_showcase_items')) {
+            SiteSetting::set('hero_showcase_items', json_encode($request->input('hero_showcase_items')));
         }
 
         return redirect()->back()->with('success', 'Pengaturan website, logo, dan favicon berhasil diperbarui!');

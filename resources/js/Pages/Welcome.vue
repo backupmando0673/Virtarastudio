@@ -74,6 +74,7 @@ defineProps({
             <HeroSection
                 :settings="settings"
                 :whatsapp-url="whatsappUrl"
+                :services="services"
             />
 
             <!-- 5 Services Section -->
