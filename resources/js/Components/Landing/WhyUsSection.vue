@@ -53,7 +53,7 @@ const advantages = [
                     <span>Keunggulan Kami</span>
                 </div>
                 <h2 class="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
-                    Mengapa Memilih Virtarastudio?
+                    Mengapa Memilih Virtara Studio?
                 </h2>
                 <p class="mt-4 text-base text-slate-600 sm:text-lg leading-relaxed">
                     Komitmen kami adalah memberikan hasil digital terbaik dengan proses yang mudah, komunikasi cepat via WhatsApp, dan biaya yang efisien.

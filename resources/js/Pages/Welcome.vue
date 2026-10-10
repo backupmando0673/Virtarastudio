@@ -49,7 +49,7 @@ defineProps({
 
 <template>
     <Head>
-        <title>{{ settings.site_name || 'Virtarastudio' }} - Jasa Website, Android, Game, AR & VR</title>
+        <title>{{ settings.site_name || 'Virtara studio' }} - Jasa Website, Android, Game, AR & VR</title>
         <meta
             name="description"
             :content="settings.site_tagline || 'Layanan pembuatan website murah, aplikasi Android, game interaktif, AR, dan VR dengan konsultasi gratis via WhatsApp.'"
