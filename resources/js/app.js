@@ -58,9 +58,22 @@ if (typeof window !== 'undefined') {
         }
 
         if (hash && hash.length > 1) {
-            window.umami.track('klik-menu', {
+            const rawText = el.textContent.trim();
+            const textSlug = rawText
+                .toLowerCase()
+                .replace(/[^a-z0-9\s-]/g, '')
+                .trim()
+                .replace(/\s+/g, '-');
+
+            const targetId = hash.replace('#', '').toLowerCase();
+
+            // Nama event dinamis: gunakan slug teks tombol (misal: 'klik-layanan', 'klik-portofolio'),
+            // atau jika teks kosong gunakan ID anchor (misal: 'klik-services', 'klik-portfolio').
+            const eventName = textSlug ? `klik-${textSlug}` : `klik-${targetId}`;
+
+            window.umami.track(eventName, {
                 tujuan: hash,
-                teks: el.textContent.trim().slice(0, 50),
+                teks: rawText.slice(0, 50),
             });
         }
     });
